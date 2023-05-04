@@ -6,6 +6,8 @@ from energymateo.wind_solar_com_layer import WindSolarComLayer
 from energymateo.wind_solar_com_layer import WindSolarComLayerType
 from energymateo.wind_facility_met_data import WindFacilityMetData,WindFacilityMetDataType
 from energymateo.wind_facility_data import WindFacilityDataType
+from energymateo.power_data import PowerData,PowerDataType
+from energymateo.gross_real_power_capability_data import GrossRealPowerCapabilityDataType
 from energymateo.error_alert import ErrorAlert
 
 import json
@@ -25,26 +27,44 @@ def main():
     print (MET_TOWER_SET_1)
     kerberos_auth = HTTPKerberosAuth(mutual_authentication=DISABLED)
 
+    #Webapi to get MET1
     data_set_1=requests.get(url=MET_TOWER_SET_1, auth=kerberos_auth).json()
     GETVALUE_URL=f'{WEBID_URL}streamsets/{data_set_1["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
     print(GETVALUE_URL)
     data_met_Tower_set1=requests.get(url=GETVALUE_URL, auth=kerberos_auth).json()
     print(data_met_Tower_set1)
 
+    #Webapi to get MET2
     data_set_2=requests.get(url=MET_TOWER_SET_2, auth=kerberos_auth).json()
     GETVALUE_URL=f'{WEBID_URL}streamsets/{data_set_2["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
     print(GETVALUE_URL)
     data_met_Tower_set2=requests.get(url=GETVALUE_URL, auth=kerberos_auth).json()
     print(data_met_Tower_set2)
 
+    #Webapi to get PowerData
     data_set_3=requests.get(url=POWER_DATA, auth=kerberos_auth).json()
     GETVALUE_URL=f'{WEBID_URL}streamsets/{data_set_3["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
     print(GETVALUE_URL)
     power_dt=requests.get(url=GETVALUE_URL, auth=kerberos_auth).json()
     print(power_dt)
 
-    n=WindSolarComLayerType.ByDateNpositionNfacility()
+    #Webapi to get V136 TurbineData
+    data_set_4=requests.get(url=FACILITY_DATA_V136, auth=kerberos_auth).json()
+    GETVALUE_URL=f'{WEBID_URL}streamsets/{data_set_4["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
+    print(GETVALUE_URL)
+    V136_dt=requests.get(url=GETVALUE_URL, auth=kerberos_auth).json()
+    print(V136_dt)
 
+    #Webapi to get V150 TurbineData
+    data_set_5=requests.get(url=FACILITY_DATA_V150, auth=kerberos_auth).json()
+    GETVALUE_URL=f'{WEBID_URL}streamsets/{data_set_5["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
+    print(GETVALUE_URL)
+    V150_dt=requests.get(url=GETVALUE_URL, auth=kerberos_auth).json()
+    print(V150_dt)
+
+
+    #Peter's Teaching
+    n=WindSolarComLayerType.ByDateNpositionNfacility()
     wind_facility_dt=WindFacilityDataType.facility=data_met_Tower_set1['Items'][11]['Value']['Value']
     n.wind_facility_data=wind_facility_dt
     xml_data=WindSolarComLayer([n])
@@ -52,7 +72,8 @@ def main():
     output = serializer.render(xml_data)
     print(output)
 
-    m1=WindFacilityMetData.MetTowerData()
+    #Put MET1 data to WindSolarComSchema
+    m1=WindSolarComLayerType.ByDateNpositionNfacility()
     met_tower_data=[
         WindFacilityMetDataType.MetTowerData(
             meteorological_tower_unique_id=data_met_Tower_set1['Items'][6]['Value']['Value'],
@@ -72,7 +93,8 @@ def main():
     output1 = serializer.render(xml_data1)
     print(output1)
     
-    m2=WindFacilityMetData.MetTowerData()
+    #Put MET2 data to WindSolarComSchema
+    m2=WindSolarComLayerType.ByDateNpositionNfacility()
     met_tower_data=[
         WindFacilityMetDataType.MetTowerData(
             meteorological_tower_unique_id=data_met_Tower_set2['Items'][6]['Value']['Value'],
@@ -87,10 +109,28 @@ def main():
         )
     ]
     m2=met_tower_data
-    xml_data1=WindFacilityMetData([m1,m2])
+    xml_data1=WindSolarComLayer([m1,m2])
     serializer = XmlSerializer() 
     output1 = serializer.render(xml_data1)
     print(output1)
+
+    #Put Power data,GrossPwrCapacity,MET1,MET2 to WindSolarComSchema
+    pwr=WindSolarComLayerType.ByDateNpositionNfacility()
+    pwr_data=[
+        PowerDataType(
+            real_power_limit=power_dt['Items'][0]['Value']['Value'],
+            net_to_grid=power_dt["Items"][1]["Value"]["Value"],
+            ),
+        GrossRealPowerCapabilityDataType(
+            gross_real_power_capability=power_dt['Items'][2]['Value']['Value']
+        )
+    ]
+    m3=pwr_data
+    xml_data1=WindSolarComLayer([m1,m2,m3])
+    serializer = XmlSerializer() 
+    output1 = serializer.render(xml_data1)
+    print(output1)
+
 
 
 
