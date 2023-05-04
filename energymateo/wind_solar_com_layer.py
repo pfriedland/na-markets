@@ -1,12 +1,10 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
-from Test.Class_Files.error_alert import ErrorAlertType
-from tests.fixtures.primer.gross_real_power_capability_data import GrossRealPowerCapabilityDataType
-from tests.fixtures.primer.power_data import PowerDataType
-from tests.fixtures.primer.solar_facility_data import SolarFacilityDataType
-from tests.fixtures.primer.solar_facility_met_data import SolarFacilityMetDataType
-from tests.fixtures.primer.wind_facility_data import WindFacilityDataType
-from tests.fixtures.primer.wind_facility_met_data import WindFacilityMetDataType
+from .error_alert import ErrorAlertType
+from .gross_real_power_capability_data import GrossRealPowerCapabilityDataType
+from .power_data import PowerDataType
+from .wind_facility_data import WindFacilityDataType
+from .wind_facility_met_data import WindFacilityMetDataType
 
 __NAMESPACE__ = "http://windforecasting.public.aeso.ca"
 
@@ -57,14 +55,6 @@ class WindSolarComLayerType:
                 "namespace": "http://windforecasting.public.aeso.ca",
             }
         )
-        solar_facility_met_data: List[SolarFacilityMetDataType] = field(
-            default_factory=list,
-            metadata={
-                "name": "SolarFacilityMetData",
-                "type": "Element",
-                "namespace": "http://windforecasting.public.aeso.ca",
-            }
-        )
         power_data: List[PowerDataType] = field(
             default_factory=list,
             metadata={
@@ -85,14 +75,6 @@ class WindSolarComLayerType:
             default_factory=list,
             metadata={
                 "name": "WindFacilityData",
-                "type": "Element",
-                "namespace": "http://windforecasting.public.aeso.ca",
-            }
-        )
-        solar_facility_data: List[SolarFacilityDataType] = field(
-            default_factory=list,
-            metadata={
-                "name": "SolarFacilityData",
                 "type": "Element",
                 "namespace": "http://windforecasting.public.aeso.ca",
             }

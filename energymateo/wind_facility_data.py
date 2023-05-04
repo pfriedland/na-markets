@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
-from tests.fixtures.primer.wind_facility_met_data import (
+from .wind_facility_met_data import (
     TimeStampsActivity,
     TimeStampsSource,
 )

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://windforecasting.public.aeso.ca" targetNamespace="http://windforecasting.public.aeso.ca" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="WindFacilityMetData.xsd"/>
+	<xs:include schemaLocation="SolarFacilityMetData.xsd"/>
+	<xs:include schemaLocation="PowerData.xsd"/>
+	<xs:include schemaLocation="GrossRealPowerCapabilityData.xsd"/>
+	<xs:include schemaLocation="WindFacilityData.xsd"/>
+	<xs:include schemaLocation="SolarFacilityData.xsd"/>
+	<xs:include schemaLocation="Error_Alert.xsd"/>
+	<xs:element name="WindSolarComLayer" type="WindSolarComLayerType">
+		<xs:annotation>
+			<xs:documentation>Element that packages the MET, Power and Facility data. The three kind of data must be sorted by Date : PositionID : FacilityID : Power Data : Met Data : Fac Data</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="WindSolarComLayerType">
+		<xs:sequence>
+			<xs:element name="AccessKey" minOccurs="0" maxOccurs="1">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="GzipData" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="100000"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="ByDateNPositionNFacility" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>A wrapper element to hold the Power, MET and Facility data for "a date", within "a position" and for  "a facility".</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WindFacilityMetData" type="WindFacilityMetDataType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="SolarFacilityMetData" type="SolarFacilityMetDataType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="PowerData" type="PowerDataType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="GrossRealPowerCapabilityData" type="GrossRealPowerCapabilityDataType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="WindFacilityData" type="WindFacilityDataType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="SolarFacilityData" type="SolarFacilityDataType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="ErrorAlert" type="ErrorAlertType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

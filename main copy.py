@@ -4,9 +4,14 @@ from xsdata.formats.dataclass.serializers import XmlSerializer
 
 from energymateo.wind_solar_com_layer import WindSolarComLayer
 from energymateo.wind_solar_com_layer import WindSolarComLayerType
-from energymateo.wind_facility_met_data import WindFacilityMetData
+from energymateo.wind_facility_met_data import WindFacilityMetData,WindFacilityMetDataType
 from energymateo.wind_facility_data import WindFacilityDataType
 from energymateo.error_alert import ErrorAlert
+
+import json
+import xml.etree.ElementTree as ET
+from dataclasses import asdict
+from datetime import datetime
 
 BASE_URL="https://egpna-pi-web.enelint.global/PIwebapi/elements?path=\\\\egpna-pi-af\\North America Markets\\GRBC-Grizzly Bear Creek\\"
 WEBID_URL="https://egpna-pi-web.enelint.global/PIwebapi/"
@@ -32,11 +37,29 @@ def main():
     n.wind_facility_data=wind_facility_dt
     xml_data=WindSolarComLayer([n])
     serializer = XmlSerializer()
-   
-
-   
     output = serializer.render(xml_data)
     print(output)
+
+    m1=WindSolarComLayerType.ByDateNpositionNfacility()
+    met_tower_data=[
+        WindFacilityMetDataType.MetTowerData(
+            meteorological_tower_unique_id=data_met_Tower_set1['Items'][6]['Value']['Value'],
+            ambient_temperature=data_met_Tower_set1["Items"][14]["Value"]["Value"],
+            barometric_pressure=data_met_Tower_set1["Items"][13]["Value"]["Value"],
+            dew_point=data_met_Tower_set1["Items"][12]["Value"]["Value"],
+            wind_speed=data_met_Tower_set1["Items"][0]["Value"]["Value"],
+            wind_direction=data_met_Tower_set1["Items"][1]["Value"]["Value"],
+            relative_humidity=data_met_Tower_set1["Items"][3]["Value"]["Value"],
+            precipitation=data_met_Tower_set1["Items"][4]["Value"]["Value"],
+            iceup_parameter=data_met_Tower_set1["Items"][10]["Value"]["Value"]
+        )
+    ]
+    m1.wind_facility_met_data=met_tower_data
+    xml_data1=WindSolarComLayer([m1])
+    serializer = XmlSerializer()
+    output1 = serializer.render(xml_data1)
+    print(output1)
+    
 
 
 
