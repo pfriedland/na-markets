@@ -16,3 +16,4 @@ tests/resources/logs/
 src/version.py
 tests/resources/backup/
 *.docx
+**/Tests/*
