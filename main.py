@@ -71,8 +71,8 @@ def main():
     com_layer=WindSolarComLayer()
     com_layer.access_key=""
     com_layer.by_date_nposition_nfacility=n
-    wind_facility_met_data=n.wind_facility_met_data
-    com_layer.wind_facility_met_data=wind_facility_met_data
+    #n.wind_facility_met_data=WindFacilityMetDataType()
+    #com_layer.wind_facility_met_data=wind_facility_met_data
     serializer = XmlSerializer()
     output = serializer.render(com_layer)
     print(output)
