@@ -67,18 +67,23 @@ def main():
     com_layer=WindSolarComLayer()
     com_layer.access_key=""
     
-
+    # create a <ns0:ByDateNPositionNFacility> 
     n=WindSolarComLayerType.ByDateNpositionNfacility()
     com_layer.by_date_nposition_nfacility=n
 
 
 
-
+    # set the facility name
     wind_facility_dt=WindFacilityData.facility=data_met_Tower_set1['Items'][11]['Value']['Value']
     n.wind_facility_data=wind_facility_dt
-    wf_met_dt = WindFacilityMetData()
 
-    wf_met_dt.met_tower_data=WindFacilityMetDataType.MetTowerData(meteorological_tower_unique_id=data_met_Tower_set1['Items'][6]['Value']['Value'],
+
+
+    wf_met_dt_arr = [] 
+    
+    tower1 = WindFacilityMetData()
+    tower1.met_tower_data=WindFacilityMetDataType.MetTowerData(
+        meteorological_tower_unique_id=data_met_Tower_set1['Items'][6]['Value']['Value'],
             ambient_temperature=data_met_Tower_set1["Items"][14]["Value"]["Value"],
             barometric_pressure=data_met_Tower_set1["Items"][13]["Value"]["Value"],
             dew_point=data_met_Tower_set1["Items"][12]["Value"]["Value"],
@@ -88,9 +93,25 @@ def main():
             precipitation=data_met_Tower_set1["Items"][4]["Value"]["Value"],
             iceup_parameter=data_met_Tower_set1["Items"][10]["Value"]["Value"]
         )
+    wf_met_dt_arr.append(tower1)
+    tower2 = WindFacilityMetData()
+    tower2.met_tower_data=WindFacilityMetDataType.MetTowerData(
+        meteorological_tower_unique_id=data_met_Tower_set2['Items'][6]['Value']['Value'],
+            ambient_temperature=data_met_Tower_set2["Items"][14]["Value"]["Value"],
+            barometric_pressure=data_met_Tower_set2["Items"][13]["Value"]["Value"],
+            dew_point=data_met_Tower_set2["Items"][12]["Value"]["Value"],
+            wind_speed=data_met_Tower_set2["Items"][0]["Value"]["Value"],
+            wind_direction=data_met_Tower_set2["Items"][1]["Value"]["Value"],
+            relative_humidity=data_met_Tower_set2["Items"][3]["Value"]["Value"],
+            precipitation=data_met_Tower_set2["Items"][4]["Value"]["Value"],
+            iceup_parameter=data_met_Tower_set2["Items"][10]["Value"]["Value"]
+    )
+
+    wf_met_dt_arr.append(tower2)
 
 
-    n.wind_facility_met_data=wf_met_dt
+    # set the array of met tower data (not individual towers)
+    n.wind_facility_met_data=wf_met_dt_arr
     #com_layer.wind_facility_met_data=wind_facility_met_data
     serializer = XmlSerializer()
     output = serializer.render(com_layer)
