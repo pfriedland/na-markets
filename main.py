@@ -12,7 +12,7 @@ from energymateo.gross_real_power_capability_data import GrossRealPowerCapabilit
 from energymateo.error_alert import ErrorAlert
 
 import json
-import xml.etree.ElementTree as ET
+
 from dataclasses import asdict
 from datetime import datetime
 
@@ -27,31 +27,43 @@ FACILITY_DATA_V150=f'{BASE_URL}GRBC-FacilityData-V150&selectedFields=WebId'
 class EnergyMeteoETL:
   # purpose of class is to 
   def __init__(self, config, user, pwd):
-    self.user = user
+    self.user = user # energymateo.de
     self.pwd = pwd
-    self.facility_name = config['facilityName']
-    self.base_url = config['baseURL']
-    self.credentials = config['credentials']
-    self.power_data = config['powerData']
-    self.met_towers = []
-    self.etl()
+    
+    self.af_base_url = config['AF_BaseUrl'] # PI AF base URL
+    self.af_database = config['AF_Database']
+    self.base_url = f"{self.af_base_url}/{self.af_database}"
+
+    self.etl(config)
   
   def authenticate(self):
     #PI kerberos authentication
     self.kerberos_auth = HTTPKerberosAuth(mutual_authentication=DISABLED)
 
-  def extract(self):
+  def extract(self, config):
+
     #Extract raw PI data
-    pass
-  def transform(self):
-    #transform data
-    pass
-  def load(self):
+    self.authenticate()
+    # loop through plants
+    for plant in config["plants"]:
+      extracted_data = {}
+      facility_name = config['facilityName'] # wind / solar plant
+      # loop through met towers
+
+
+  def transform(self, data={}):
+    #transform data; take PI data and turn into XML using xsd-generated Python classes
+    
+    self.load(data)
+
+  def load(self, load_data=""):
     #load data
     pass
     
   def etl(self):
-    extract();
+    self.extract()
+    self.transform()
+    self.load()
     
     
 
