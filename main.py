@@ -24,9 +24,36 @@ POWER_DATA=f'{BASE_URL}GRBC-PowerData&selectedFields=WebId'
 FACILITY_DATA_V136=f'{BASE_URL}GRBC-FacilityData-V136&selectedFields=WebId'
 FACILITY_DATA_V150=f'{BASE_URL}GRBC-FacilityData-V150&selectedFields=WebId'
 
+class EnergyMeteoETL:
+  def __init__(self, config):
+    self.facility_name = config['facilityName']
+    self.base_url = config['baseURL']
+    self.credentials = config['credentials']
+    self.power_data = config['powerData']
+    self.met_towers = []
+    self.etl()
+  
+  def authenticate(self):
+    #PI kerberos authentication
+    self.kerberos_auth = HTTPKerberosAuth(mutual_authentication=DISABLED)
+
+  def extract(self):
+    #Extract raw PI data
+    pass
+  def transform(self):
+    #transform data
+    pass
+  def load(self):
+    #load data
+    pass
+    
+  def etl(self):
+    extract();
+    
+    
+
 def main():
   #  print (MET_TOWER_SET_1)
-    kerberos_auth = HTTPKerberosAuth(mutual_authentication=DISABLED)
 
     #Webapi to get MET1
     data_set_1=requests.get(url=MET_TOWER_SET_1, auth=kerberos_auth).json()
