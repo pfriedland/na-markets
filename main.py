@@ -25,7 +25,10 @@ FACILITY_DATA_V136=f'{BASE_URL}GRBC-FacilityData-V136&selectedFields=WebId'
 FACILITY_DATA_V150=f'{BASE_URL}GRBC-FacilityData-V150&selectedFields=WebId'
 
 class EnergyMeteoETL:
-  def __init__(self, config):
+  # purpose of class is to 
+  def __init__(self, config, user, pwd):
+    self.user = user
+    self.pwd = pwd
     self.facility_name = config['facilityName']
     self.base_url = config['baseURL']
     self.credentials = config['credentials']
