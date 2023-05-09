@@ -8,8 +8,11 @@ from energymateo.wind_solar_com_layer import WindSolarComLayerType
 from energymateo.wind_facility_met_data import TimeStampsActivity, TimeStampsSource, WindFacilityMetData, WindFacilityMetDataType
 from energymateo.wind_facility_data import WindFacilityData, WindFacilityDataType
 from energymateo.power_data import PowerData,PowerDataType
-from energymateo.gross_real_power_capability_data import GrossRealPowerCapabilityDataType
-from energymateo.error_alert import ErrorAlert
+from energymateo.gross_real_power_capability_data import GrossRealPowerCapabilityDataType, GrossRealPowerCapabilityDataType
+from energymateo.error_alert import ErrorAlert, ErrorAlertType
+
+
+from utilities.config_parser import ConfigParser
 
 import json
 
@@ -44,11 +47,13 @@ class EnergyMeteoETL:
 
     #Extract raw PI data
     self.authenticate()
-    # loop through plants
+    # loop through plants as they are defined in the external JSON config file
+
     for plant in config["plants"]:
       extracted_data = {}
-      facility_name = config['facilityName'] # wind / solar plant
+      facility_name = plant['AF_FacilityName'] # wind / solar plant as 
       # loop through met towers
+      for tower in config[""]
 
 
   def transform(self, data={}):
