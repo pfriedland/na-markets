@@ -2,6 +2,7 @@ import requests
 from requests_kerberos import HTTPKerberosAuth,DISABLED
 from xsdata.formats.dataclass.serializers import XmlSerializer
 
+from constants import ENERGY_MATEO_USER, ENERGY_MATEO_PWD, CONFIG_FILENAME
 
 from energymateo.wind_solar_com_layer import WindSolarComLayer
 from energymateo.wind_solar_com_layer import WindSolarComLayerType
@@ -29,8 +30,8 @@ FACILITY_DATA_V150=f'{BASE_URL}GRBC-FacilityData-V150&selectedFields=WebId'
 
 class EnergyMeteoETL:
   # purpose of class is to 
-  def __init__(self, config, user, pwd):
-    self.user = user # energymateo.de
+  def __init__(self, config, user=ENERGY_MATEO_USER, pwd=ENERGY_MATEO_PWD):
+    self.user = user
     self.pwd = pwd
     
     self.af_base_url = config['AF_BaseUrl'] # PI AF base URL
@@ -53,7 +54,8 @@ class EnergyMeteoETL:
       extracted_data = {}
       facility_name = plant['AF_FacilityName'] # wind / solar plant as 
       # loop through met towers
-      for tower in config[""]
+      for tower in config[""]:
+        pass
 
 
   def transform(self, data={}):
@@ -73,6 +75,14 @@ class EnergyMeteoETL:
     
 
 def main():
+
+  try:
+    config = ConfigParser(CONFIG_FILENAME).parse()
+    etl = EnergyMeteoETL(config)
+  except Exception as e:
+    print (e)
+
+"""
   #  print (MET_TOWER_SET_1)
 
     #Webapi to get MET1
@@ -165,7 +175,7 @@ def main():
     print(output)
 
     
-"""
+
     #Put MET1 data to WindSolarComSchema
     m1=WindSolarComLayerType.ByDateNpositionNfacility()
     met_tower_dt1=[WindFacilityMetDataType.MetTowerData(meteorological_tower_unique_id=data_met_Tower_set1['Items'][6]['Value']['Value'],
