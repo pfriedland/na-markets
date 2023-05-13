@@ -6,15 +6,28 @@
         { 
             "AF_FacilityName": "GRBC-Grizzly Bear Creek",
             "WebIdMeta": {
-                "MetTowers": ["GRBC-Met Tower-Set1&selectedFields=WebId", "GRBC-Met Tower-Set2&selectedFields=WebId"],
+                "MetTowers": ["GRBC-Met Tower-Set1-Avg&selectedFields=WebId", "GRBC-Met Tower-Set2-Avg&selectedFields=WebId"],
                 "PowerData": "GRBC-PowerData&selectedFields=WebId",
                 "FacilityData": ["GRBC-FacilityData-V136&selectedFields=WebId", "GRBC-FacilityData-V150&selectedFields=WebId"]
             }
 
             
+        },
+        { 
+            "AF_FacilityName": "CSTL-Castle Rock Ridge",
+            "WebIdMeta": {
+                "MetTowers": ["CSTL-Met Tower&selectedFields=WebId", "CSTL-Met Tower&selectedFields=WebId"]
+                
+            }
+            
+        },
+        { 
+            "AF_FacilityName": "RVVW-Riverview",
+            "WebIdMeta": {
+                "MetTowers": ["RVVW-Met Tower&selectedFields=WebId", "RVVW-Met Tower&selectedFields=WebId"]
+            }
+            
         }
-  
-  
   
   ]
 }
