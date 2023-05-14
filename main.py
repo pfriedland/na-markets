@@ -72,8 +72,15 @@ class EnergyMeteoETL:
         print(get_value_url)
         tower_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
         plant_data['metTowers'].append(tower_data)
-      
-      self.transform(extracted_data)
+
+      #Webapi to get PowerData
+      if "PowerData" in plant["WebIdMeta"]:
+        get_webId_url = f"{self.base_url}\\{facility_name}\\{plant['WebIdMeta']['PowerData']}"  
+        data_set=requests.get(url=get_webId_url, auth=self.kerberos_auth).json()
+        get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
+        power_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
+        plant_data["powerData"] = power_data
+        self.transform(extracted_data)
 
 
   def transform(self, data={}):
@@ -87,7 +94,7 @@ class EnergyMeteoETL:
       # set the facility name
       wind_facility_dt=WindFacilityData.facility=plant["facilityName"]
       n.wind_facility_data=wind_facility_dt
-      wf_met_dt_arr = [] 
+      wf_dt_arr = [] 
       # loop through the met towers
       for tower in plant["metTowers"]:
         metTower = WindFacilityMetData()
@@ -103,9 +110,19 @@ class EnergyMeteoETL:
             precipitation=items[IDX_TOWER_PRECIP]["Value"]["Value"],
             iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"]
         )
-        wf_met_dt_arr.append(metTower)
+        wf_dt_arr.append(metTower)
     # set the array of met tower data (not individual towers)
-    n.wind_facility_met_data=wf_met_dt_arr
+    n.wind_facility_met_data=wf_dt_arr
+
+
+
+
+    # create PowerData object
+    power_data = PowerData()
+    power_dt_arr = []
+    n.power_data = PowerDataType.
+    power_dt_arr.append(power_data)
+
     self.load(com_layer)
 
   def load(self, com_layer):
