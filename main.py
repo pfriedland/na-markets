@@ -69,7 +69,7 @@ class EnergyMeteoETL:
         
         data_set=requests.get(url=get_webId_url, auth=self.kerberos_auth).json()
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
-        print(get_value_url)
+        #print(get_value_url)
         tower_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
         plant_data['metTowers'].append(tower_data)
 
@@ -120,7 +120,7 @@ class EnergyMeteoETL:
     # create PowerData object
     power_data = PowerData()
     power_dt_arr = []
-    n.power_data = PowerDataType.
+    #n.power_data = PowerDataType.
     power_dt_arr.append(power_data)
 
     self.load(com_layer)
