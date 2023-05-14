@@ -52,37 +52,68 @@ class EnergyMeteoETL:
     #Extract raw PI data
     self.authenticate()
     # loop through plants as they are defined in the external JSON config file
-
+    extracted_data = {}
+    extracted_data["plants"]= []
     for plant in self.config["plants"]:
-      extracted_data = {}
-      extracted_data["metTowers"]= []
-      facility_name = plant['AF_FacilityName'] # wind / solar plant as 
+      plant_data = {}
+      extracted_data["plants"].append(plant_data)
+      
+      facility_name = plant['AF_FacilityName'] # wind / solar plant 
+      plant_data["facilityName"] = facility_name
+      plant_data["metTowers"]= []
       # loop through met towers
       for tower in plant["WebIdMeta"]["MetTowers"]:
-        #Webapi to get MET1
+
+        #Webapi to get met tower data
         get_webId_url = f"{self.base_url}\\{facility_name}\\{tower}"
         
         data_set=requests.get(url=get_webId_url, auth=self.kerberos_auth).json()
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
         print(get_value_url)
         tower_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
-        extracted_data['metTowers'].append(tower_data)
+        plant_data['metTowers'].append(tower_data)
       
       self.transform(extracted_data)
 
 
   def transform(self, data={}):
     #transform data; take PI data and turn into XML using xsd-generated Python classes
-    com_layer=WindSolarComLayer()
-    com_layer.access_key=""
-    # set the facility name
-    wind_facility_dt=WindFacilityData.facility=data['['Items'][IDX_TOWER_FACILITY]['Value']['Value']
-    n.wind_facility_data=wind_facility_dt
+    for plant in data['plants']:
+      com_layer=WindSolarComLayer()
+      com_layer.access_key=""
+      # create a <ns0:ByDateNPositionNFacility> 
+      n=WindSolarComLayerType.ByDateNpositionNfacility()
+      com_layer.by_date_nposition_nfacility=n
+      # set the facility name
+      wind_facility_dt=WindFacilityData.facility=plant["facilityName"]
+      n.wind_facility_data=wind_facility_dt
+      wf_met_dt_arr = [] 
+      # loop through the met towers
+      for tower in plant["metTowers"]:
+        metTower = WindFacilityMetData()
+        items = tower["Items"]
+        metTower.met_tower_data=WindFacilityMetDataType.MetTowerData(
+        meteorological_tower_unique_id=items[IDX_TOWER_UID]['Value']['Value'],
+            ambient_temperature=items[IDX_TOWER_TEMP]["Value"]["Value"],
+            barometric_pressure=items[IDX_TOWER_PRESSURE]["Value"]["Value"],
+            dew_point=items[IDX_TOWER_DEW]["Value"]["Value"],
+            wind_speed=items[IDX_TOWER_WIND]["Value"]["Value"],
+            wind_direction=items[IDX_TOWER_DIR]["Value"]["Value"],
+            relative_humidity=items[IDX_TOWER_HUMID]["Value"]["Value"],
+            precipitation=items[IDX_TOWER_PRECIP]["Value"]["Value"],
+            iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"]
+        )
+        wf_met_dt_arr.append(metTower)
+    # set the array of met tower data (not individual towers)
+    n.wind_facility_met_data=wf_met_dt_arr
     self.load(com_layer)
 
-  def load(self, load_data=""):
-    #load data
-    pass
+  def load(self, com_layer):
+    #transform Python data classes to XML
+    serializer = XmlSerializer()
+    output = serializer.render(com_layer)
+    print(output)
+    
     
   def etl(self):
     self.extract()
