@@ -91,9 +91,28 @@ class EnergyMeteoETL:
       # create a <ns0:ByDateNPositionNFacility> 
       n=WindSolarComLayerType.ByDateNpositionNfacility()
       com_layer.by_date_nposition_nfacility=n
+      # create a WindFacilityData object
+      wind_facility = WindFacilityData()
       # set the facility name
-      wind_facility_dt=WindFacilityData.facility=plant["facilityName"]
-      n.wind_facility_data=wind_facility_dt
+      now = datetime.now()
+      now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%z')
+      now_8601_nosep=now.strftime('%Y%m%dT%H%M%S%z')
+      wind_facility.facility=plant["facilityName"]
+      wind_facility.transaction_id = f"{now_8601_nosep}-{plant['facilityName']}-MET"
+      time_arr=[]
+      ts = WindFacilityDataType.TimeStamps()
+      ts.activity = "Process"
+      ts.source = "Wind Facility"
+      ts.time_stamp = now_8601
+      time_arr.append(ts)
+
+      ts = WindFacilityDataType.TimeStamps()
+      ts.activity = "Send"
+      ts.source = "Wind Facility"
+      ts.time_stamp = now_8601
+      time_arr.append(ts)
+      wind_facility.time_stamps = time_arr
+      n.wind_facility_data=wind_facility
       wf_dt_arr = [] 
       # loop through the met towers
       for tower in plant["metTowers"]:
@@ -108,7 +127,7 @@ class EnergyMeteoETL:
             wind_direction=items[IDX_TOWER_DIR]["Value"]["Value"],
             relative_humidity=items[IDX_TOWER_HUMID]["Value"]["Value"],
             precipitation=items[IDX_TOWER_PRECIP]["Value"]["Value"],
-            iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"]
+            iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"],
         )
         wf_dt_arr.append(metTower)
     # set the array of met tower data (not individual towers)
