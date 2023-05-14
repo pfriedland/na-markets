@@ -1,6 +1,7 @@
 {
     "EnergyMateoUrl": "https://windsolardatahub.aeso.ca/preprod/upload",
-    "AF_BaseUrl": "https://egpna-pi-web.enelint.global/PIwebapi/elements?path=\\\\egpna-pi-af\\",
+    "WebIdUrl": "https://egpna-pi-web.enelint.global/PIwebapi",
+    "AF_BaseUri": "/elements?path=\\\\egpna-pi-af\\",
     "AF_Database": "North America Markets",
     "plants": [
         { 

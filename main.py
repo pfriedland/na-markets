@@ -1,8 +1,10 @@
 import requests
+import urllib.parse
 from requests_kerberos import HTTPKerberosAuth,DISABLED
 from xsdata.formats.dataclass.serializers import XmlSerializer
 
 from constants import ENERGY_MATEO_USER, ENERGY_MATEO_PWD, CONFIG_FILENAME
+from constants import IDX_TOWER_UID, IDX_TOWER_TEMP,IDX_TOWER_PRESSURE,IDX_TOWER_DEW,IDX_TOWER_WIND,IDX_TOWER_DIR,IDX_TOWER_HUMID,IDX_TOWER_PRECIP,IDX_TOWER_ICEUP,IDX_FACILITY
 
 from energymateo.wind_solar_com_layer import WindSolarComLayer
 from energymateo.wind_solar_com_layer import WindSolarComLayerType
@@ -33,35 +35,50 @@ class EnergyMeteoETL:
   def __init__(self, config, user=ENERGY_MATEO_USER, pwd=ENERGY_MATEO_PWD):
     self.user = user
     self.pwd = pwd
-    
-    self.af_base_url = config['AF_BaseUrl'] # PI AF base URL
+    self.config = config
+    self.af_base_uri = config['AF_BaseUri'] # PI AF base URL
     self.af_database = config['AF_Database']
-    self.base_url = f"{self.af_base_url}/{self.af_database}"
+    self.webIdUrl = config['WebIdUrl']
+    self.base_url = f"{self.webIdUrl}{self.af_base_uri}{self.af_database}"
 
-    self.etl(config)
+    self.etl()
   
   def authenticate(self):
     #PI kerberos authentication
     self.kerberos_auth = HTTPKerberosAuth(mutual_authentication=DISABLED)
 
-  def extract(self, config):
+  def extract(self):
 
     #Extract raw PI data
     self.authenticate()
     # loop through plants as they are defined in the external JSON config file
 
-    for plant in config["plants"]:
+    for plant in self.config["plants"]:
       extracted_data = {}
+      extracted_data["metTowers"]= []
       facility_name = plant['AF_FacilityName'] # wind / solar plant as 
       # loop through met towers
-      for tower in config[""]:
-        pass
+      for tower in plant["WebIdMeta"]["MetTowers"]:
+        #Webapi to get MET1
+        get_webId_url = f"{self.base_url}\\{facility_name}\\{tower}"
+        
+        data_set=requests.get(url=get_webId_url, auth=self.kerberos_auth).json()
+        get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
+        print(get_value_url)
+        tower_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
+        extracted_data['metTowers'].append(tower_data)
+      
+      self.transform(extracted_data)
 
 
   def transform(self, data={}):
     #transform data; take PI data and turn into XML using xsd-generated Python classes
-    
-    self.load(data)
+    com_layer=WindSolarComLayer()
+    com_layer.access_key=""
+    # set the facility name
+    wind_facility_dt=WindFacilityData.facility=data['['Items'][IDX_TOWER_FACILITY]['Value']['Value']
+    n.wind_facility_data=wind_facility_dt
+    self.load(com_layer)
 
   def load(self, load_data=""):
     #load data
