@@ -4,7 +4,11 @@ from requests_kerberos import HTTPKerberosAuth,DISABLED
 from xsdata.formats.dataclass.serializers import XmlSerializer
 
 from constants import ENERGY_MATEO_USER, ENERGY_MATEO_PWD, CONFIG_FILENAME
-from constants import IDX_TOWER_UID, IDX_TOWER_TEMP,IDX_TOWER_PRESSURE,IDX_TOWER_DEW,IDX_TOWER_WIND,IDX_TOWER_DIR,IDX_TOWER_HUMID,IDX_TOWER_PRECIP,IDX_TOWER_ICEUP,IDX_FACILITY
+from constants import IDX_TOWER_UID, IDX_TOWER_TEMP,IDX_TOWER_PRESSURE
+from constants import IDX_TOWER_DEW,IDX_TOWER_WIND,IDX_TOWER_DIR,IDX_TOWER_HUMID
+from constants import IDX_TOWER_PRECIP,IDX_TOWER_ICEUP,IDX_TOWER_POSITION,IDX_FACILITY
+from constants import IDX_POWER_FACILITY, IDX_POWER_GROSS, IDX_POWER_POSITION
+from constants import IDX_POWER_NET, IDX_POWER_REAL_LIMIT
 
 from energymateo.wind_solar_com_layer import WindSolarComLayer
 from energymateo.wind_solar_com_layer import WindSolarComLayerType
@@ -42,7 +46,11 @@ class EnergyMeteoETL:
     self.base_url = f"{self.webIdUrl}{self.af_base_uri}{self.af_database}"
 
     self.etl()
-  
+  def get_position(self, value) -> list:
+    arr = []
+    arr = value.split(' ')
+    return arr
+
   def authenticate(self):
     #PI kerberos authentication
     self.kerberos_auth = HTTPKerberosAuth(mutual_authentication=DISABLED)
@@ -98,7 +106,7 @@ class EnergyMeteoETL:
       now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%z')
       now_8601_nosep=now.strftime('%Y%m%dT%H%M%S%z')
       wind_facility.facility=plant["facilityName"]
-      wind_facility.transaction_id = f"{now_8601_nosep}-{plant['facilityName']}-MET"
+      wind_facility.transaction_id = f"{now_8601_nosep}.{plant['facilityName']}.MET"
       time_arr=[]
       ts = WindFacilityDataType.TimeStamps()
       ts.activity = "Process"
@@ -112,12 +120,14 @@ class EnergyMeteoETL:
       ts.time_stamp = now_8601
       time_arr.append(ts)
       wind_facility.time_stamps = time_arr
-      n.wind_facility_data=wind_facility
+      
       wf_dt_arr = [] 
       # loop through the met towers
       for tower in plant["metTowers"]:
-        metTower = WindFacilityMetData()
+        
         items = tower["Items"]
+        position = self.get_position(items[IDX_TOWER_POSITION]["Value"]["Value"])
+        metTower = WindFacilityMetData(position_id=position[0], sub_interval=position[2])
         metTower.met_tower_data=WindFacilityMetDataType.MetTowerData(
         meteorological_tower_unique_id=items[IDX_TOWER_UID]['Value']['Value'],
             ambient_temperature=items[IDX_TOWER_TEMP]["Value"]["Value"],
@@ -128,7 +138,9 @@ class EnergyMeteoETL:
             relative_humidity=items[IDX_TOWER_HUMID]["Value"]["Value"],
             precipitation=items[IDX_TOWER_PRECIP]["Value"]["Value"],
             iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"],
+
         )
+
         wf_dt_arr.append(metTower)
     # set the array of met tower data (not individual towers)
     n.wind_facility_met_data=wf_dt_arr
@@ -138,6 +150,8 @@ class EnergyMeteoETL:
 
     # create PowerData object
     power_data = PowerData()
+
+    
     power_dt_arr = []
     #n.power_data = PowerDataType.
     power_dt_arr.append(power_data)
