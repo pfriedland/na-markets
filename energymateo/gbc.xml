@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WindSolarComLayer xmlns:ns0="http://windforecasting.public.aeso.ca">
+	<AccessKey />
+	<ByDateNPositionNFacility>
+		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
+			<MetTowerData>
+				<MeteorologicalTowerUniqueID>
+					708s12053111
+				</MeteorologicalTowerUniqueID>
+				<WindSpeed>
+					5.669574629790326
+				</WindSpeed>
+				<WindDirection>
+					205.9276120523362
+				</WindDirection>
+				<BarometricPressure>
+					932.1430039531994
+				</BarometricPressure>
+				<AmbientTemperature>
+					16.0
+				</AmbientTemperature>
+				<DewPoint>
+					16.0
+				</DewPoint>
+				<RelativeHumidity>
+					60.457022831051
+				</RelativeHumidity>
+				<Precipitation>
+					16.0
+				</Precipitation>
+			</MetTowerData>
+		</WindFacilityMetData>
+		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
+			<MetTowerData>
+				<MeteorologicalTowerUniqueID>
+					708s4553111
+				</MeteorologicalTowerUniqueID>
+				<WindSpeed>
+					5.9619628224934
+				</WindSpeed>
+				<WindDirection>
+					201.4792024849006
+				</WindDirection>
+				<BarometricPressure>
+					944.00359561162
+				</BarometricPressure>
+				<AmbientTemperature>
+					12.699999809265137
+				</AmbientTemperature>
+				<DewPoint>
+					12.699999809265137
+				</DewPoint>
+				<RelativeHumidity>
+					75.86178691101141
+				</RelativeHumidity>
+				<IceupParameter>
+					0.0
+				</IceupParameter>
+				<Precipitation>
+					12.699999809265137
+				</Precipitation>
+			</MetTowerData>
+		</WindFacilityMetData>
+		<WindFacilityData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityData">
+			<Facility>
+				GRBC-Grizzly Bear Creek
+			</Facility>
+			<TransactionID>
+				20230515T084928-GRBC-Grizzly Bear Creek-MET
+			</TransactionID>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Process
+				</Activity>
+				<TimeStamp>
+					2023-05-15T08:49:28
+				</TimeStamp>
+			</TimeStamps>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Send
+				</Activity>
+				<TimeStamp>
+					2023-05-15T08:49:28
+				</TimeStamp>
+			</TimeStamps>
+		</WindFacilityData>
+	</ByDateNPositionNFacility>
+</WindSolarComLayer>
