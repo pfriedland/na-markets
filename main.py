@@ -99,36 +99,47 @@ class EnergyMeteoETL:
       # create a <ns0:ByDateNPositionNFacility> 
       n=WindSolarComLayerType.ByDateNpositionNfacility()
       com_layer.by_date_nposition_nfacility=n
-      # create a WindFacilityData object
-      wind_facility = WindFacilityData()
+
       # set the facility name
       now = datetime.now()
       now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%z')
       now_8601_nosep=now.strftime('%Y%m%dT%H%M%S%z')
-      wind_facility.facility=plant["facilityName"]
-      wind_facility.transaction_id = f"{now_8601_nosep}.{plant['facilityName']}.MET"
+   
       time_arr=[]
       ts = WindFacilityDataType.TimeStamps()
+      ts.time_stamp = now_8601
       ts.activity = "Process"
       ts.source = "Wind Facility"
-      ts.time_stamp = now_8601
       time_arr.append(ts)
 
       ts = WindFacilityDataType.TimeStamps()
+      ts.time_stamp = now_8601
       ts.activity = "Send"
       ts.source = "Wind Facility"
-      ts.time_stamp = now_8601
       time_arr.append(ts)
-      wind_facility.time_stamps = time_arr
+
       
-      wf_dt_arr = [] 
+
+
       # loop through the met towers
+      metFacility = WindFacilityMetData(
+            transaction_id=f"{now_8601_nosep}.{plant['facilityName']}.MET",
+        facility=plant["facilityName"]
+      )
+      wf_dt_arr = [] 
+      
+      n.wind_facility_met_data = metFacility
+      
+
       for tower in plant["metTowers"]:
         
         items = tower["Items"]
         position = self.get_position(items[IDX_TOWER_POSITION]["Value"]["Value"])
-        metTower = WindFacilityMetData(position_id=position[0], sub_interval=position[2])
-        metTower.met_tower_data=WindFacilityMetDataType.MetTowerData(
+        #position_id=position[0], sub_interval=position[2]
+        metFacility.position_id = position[0]
+        metFacility.sub_interval = position[2]
+        
+        metFacility.met_tower_data=WindFacilityMetDataType.MetTowerData(
         meteorological_tower_unique_id=items[IDX_TOWER_UID]['Value']['Value'],
             ambient_temperature=items[IDX_TOWER_TEMP]["Value"]["Value"],
             barometric_pressure=items[IDX_TOWER_PRESSURE]["Value"]["Value"],
@@ -140,11 +151,9 @@ class EnergyMeteoETL:
             iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"],
 
         )
-
-        wf_dt_arr.append(metTower)
+        wf_dt_arr.append(metFacility.met_tower_data)
     # set the array of met tower data (not individual towers)
-    n.wind_facility_met_data=wf_dt_arr
-
+    metFacility.met_tower_data = wf_dt_arr
 
 
 
@@ -173,12 +182,12 @@ class EnergyMeteoETL:
     
 
 def main():
-
+  import traceback
   try:
     config = ConfigParser(CONFIG_FILENAME).parse()
     etl = EnergyMeteoETL(config)
   except Exception as e:
-    print (e)
+     traceback.print_exc()
 
 """
   #  print (MET_TOWER_SET_1)

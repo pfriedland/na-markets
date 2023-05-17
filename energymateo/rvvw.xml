@@ -3,68 +3,67 @@
 	<AccessKey />
 	<ByDateNPositionNFacility>
 		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
-			<Facility>
-				GRBC-Grizzly Bear Creek
-			</Facility>
-			<TransactionID>
-				20230516T200336.GRBC-Grizzly Bear Creek.MET
-			</TransactionID>
 			<PositionID>
-				1
+				4
 			</PositionID>
 			<SubInterval>
-				3
+				7
 			</SubInterval>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					11.198230723646473
+					4.9200867489266855
 				</WindSpeed>
 				<WindDirection>
-					4.051627305548886
+					207.40265333973446
 				</WindDirection>
 				<BarometricPressure>
-					923.9471296724473
+					924.5
 				</BarometricPressure>
 				<AmbientTemperature>
-					18.45288305876342
+					25.29438979388369
 				</AmbientTemperature>
 				<DewPoint>
-					-1.3329585264325543
+					4.992860296067663
 				</DewPoint>
 				<RelativeHumidity>
-					26.111638144989307
+					27.030862320862592
 				</RelativeHumidity>
-				<IceupParameter>
-					0.0
-				</IceupParameter>
 				<Precipitation>
 					0.0
 				</Precipitation>
 			</MetTowerData>
+		</WindFacilityMetData>
+		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
+			<PositionID>
+				4
+			</PositionID>
+			<SubInterval>
+				7
+			</SubInterval>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					12.560443681865213
+					5.5521348014707215
 				</WindSpeed>
 				<WindDirection>
-					4.869222059728519
+					196.4059110696499
 				</WindDirection>
 				<BarometricPressure>
-					936.0
+					936.2999877929688
 				</BarometricPressure>
 				<AmbientTemperature>
-					20.200000762939453
+					27.314836786589332
 				</AmbientTemperature>
 				<DewPoint>
-					-1.3354218730538525
+					4.989924909697368
 				</DewPoint>
 				<RelativeHumidity>
-					24.42037746117356
+					24.314811340627994
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
