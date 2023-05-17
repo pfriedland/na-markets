@@ -118,9 +118,10 @@ class EnergyMeteoETL:
       com_layer.by_date_nposition_nfacility=n
 
       # get the current time
-      now = datetime.now()
-      now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%z')
-      now_8601_nosep=now.strftime('%Y%m%dT%H%M%S%z')
+      #now = datetime.now()
+      #now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%Z')
+      now_8601 = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+      now_8601_nosep=datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
 
       # set the facility name, transaction_id
 
