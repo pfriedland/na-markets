@@ -88,9 +88,26 @@ class EnergyMeteoETL:
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
         power_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
         plant_data["powerData"] = power_data
+        
         self.transform(extracted_data)
 
+  def get_timestamps(self, type, now_8601) -> list:
 
+   
+      time_arr=[]
+      ts = type.TimeStamps()
+      ts.time_stamp = now_8601
+      ts.activity = "Process"
+      ts.source = "Wind Facility"
+      time_arr.append(ts)
+
+      ts = type.TimeStamps()
+      ts.time_stamp = now_8601
+      ts.activity = "Send"
+      ts.source = "Wind Facility"
+      time_arr.append(ts)
+      return time_arr
+  
   def transform(self, data={}):
     #transform data; take PI data and turn into XML using xsd-generated Python classes
     for plant in data['plants']:
@@ -100,37 +117,23 @@ class EnergyMeteoETL:
       n=WindSolarComLayerType.ByDateNpositionNfacility()
       com_layer.by_date_nposition_nfacility=n
 
-      # set the facility name
+      # get the current time
       now = datetime.now()
       now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%z')
       now_8601_nosep=now.strftime('%Y%m%dT%H%M%S%z')
-   
-      time_arr=[]
-      ts = WindFacilityDataType.TimeStamps()
-      ts.time_stamp = now_8601
-      ts.activity = "Process"
-      ts.source = "Wind Facility"
-      time_arr.append(ts)
 
-      ts = WindFacilityDataType.TimeStamps()
-      ts.time_stamp = now_8601
-      ts.activity = "Send"
-      ts.source = "Wind Facility"
-      time_arr.append(ts)
+      # set the facility name, transaction_id
 
-      
-
-
-      # loop through the met towers
       metFacility = WindFacilityMetData(
             transaction_id=f"{now_8601_nosep}.{plant['facilityName']}.MET",
         facility=plant["facilityName"]
       )
-      wf_dt_arr = [] 
+      
       
       n.wind_facility_met_data = metFacility
-      
-
+      wf_dt_arr = [] 
+      position = []
+      # loop through the met towers
       for tower in plant["metTowers"]:
         
         items = tower["Items"]
@@ -158,12 +161,17 @@ class EnergyMeteoETL:
 
 
     # create PowerData object
-    power_data = PowerData()
-
+    n1=WindSolarComLayerType.ByDateNpositionNfacility()
+    com_layer.by_date_nposition_nfacility=n1    
+    n1.power_data = PowerData()
+    n1.power_data.facility = plant['facilityName']
+    n1.power_data.position_id = position[0]
+    n1.power_data.sub_interval = position[2]
+    n1.power_data.time_stamps = self.get_timestamps(PowerDataType, now_8601=now_8601)
+  
     
-    power_dt_arr = []
-    #n.power_data = PowerDataType.
-    power_dt_arr.append(power_data)
+    
+    
 
     self.load(com_layer)
 
