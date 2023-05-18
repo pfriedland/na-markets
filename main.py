@@ -1,5 +1,6 @@
 import requests
 import urllib.parse
+import backoff
 from requests_kerberos import HTTPKerberosAuth,DISABLED
 from xsdata.formats.dataclass.serializers import XmlSerializer
 
@@ -44,8 +45,14 @@ class EnergyMeteoETL:
     self.af_database = config['AF_Database']
     self.webIdUrl = config['WebIdUrl']
     self.base_url = f"{self.webIdUrl}{self.af_base_uri}{self.af_database}"
+    self.by_date_nposition_nfacility_arr = []
+    self.wind_solar_com = WindSolarComLayer()
+    self.by_date_nposition_nfacility_arr.append(WindSolarComLayerType.ByDateNpositionNfacility())
+    self.by_date_nposition_nfacility_arr.append(WindSolarComLayerType.ByDateNpositionNfacility())
+    self.by_date_nposition_nfacility_arr.append(WindSolarComLayerType.ByDateNpositionNfacility())
+    self.wind_solar_com.by_date_nposition_nfacility = self.by_date_nposition_nfacility_arr
 
-    self.etl()
+    self.extract()
   def get_position(self, value) -> list:
     arr = []
     arr = value.split(' ')
@@ -89,7 +96,7 @@ class EnergyMeteoETL:
         power_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
         plant_data["powerData"] = power_data
         
-        self.transform(extracted_data)
+    self.transform(extracted_data)
 
   def get_timestamps(self, type, now_8601) -> list:
 
@@ -111,11 +118,8 @@ class EnergyMeteoETL:
   def transform(self, data={}):
     #transform data; take PI data and turn into XML using xsd-generated Python classes
     for plant in data['plants']:
-      com_layer=WindSolarComLayer()
-      com_layer.access_key=""
-      # create a <ns0:ByDateNPositionNFacility> 
-      n=WindSolarComLayerType.ByDateNpositionNfacility()
-      com_layer.by_date_nposition_nfacility=n
+      self.wind_solar_com.by_date_nposition_nfacility[0].access_key=""
+
 
       # get the current time
       #now = datetime.now()
@@ -129,9 +133,10 @@ class EnergyMeteoETL:
             transaction_id=f"{now_8601_nosep}.{plant['facilityName']}.MET",
         facility=plant["facilityName"]
       )
+      metFacility.time_stamps = self.get_timestamps(WindFacilityMetData, now_8601)
+
       
-      
-      n.wind_facility_met_data = metFacility
+      self.wind_solar_com.by_date_nposition_nfacility[0].wind_facility_met_data = metFacility
       wf_dt_arr = [] 
       position = []
       # loop through the met towers
@@ -139,7 +144,7 @@ class EnergyMeteoETL:
         
         items = tower["Items"]
         position = self.get_position(items[IDX_TOWER_POSITION]["Value"]["Value"])
-        #position_id=position[0], sub_interval=position[2]
+       
         metFacility.position_id = position[0]
         metFacility.sub_interval = position[2]
         
@@ -156,25 +161,32 @@ class EnergyMeteoETL:
 
         )
         wf_dt_arr.append(metFacility.met_tower_data)
-    # set the array of met tower data (not individual towers)
-    metFacility.met_tower_data = wf_dt_arr
+      # set the array of met tower data (not individual towers)
+      metFacility.met_tower_data = wf_dt_arr
 
+      # create PowerData object
+      
+      n1=self.wind_solar_com.by_date_nposition_nfacility[1]    
+      n1.power_data = PowerData(
+        transaction_id=f"{now_8601_nosep}.{plant['facilityName']}.PWR",
+      )
+      n1.power_data.facility = plant['facilityName']
+      n1.power_data.position_id = position[0]
+      n1.power_data.sub_interval = position[2]
+      n1.power_data.time_stamps = self.get_timestamps(PowerDataType, now_8601=now_8601)
+      items = plant["powerData"]["Items"]
+      n1.power_data.net_to_grid = items[IDX_POWER_NET]["Value"]["Value"]
+      n1.power_data.real_power_limit = items[IDX_POWER_REAL_LIMIT]["Value"]["Value"]
 
-
-    # create PowerData object
-    n1=WindSolarComLayerType.ByDateNpositionNfacility()
-    com_layer.by_date_nposition_nfacility=n1    
-    n1.power_data = PowerData()
-    n1.power_data.facility = plant['facilityName']
-    n1.power_data.position_id = position[0]
-    n1.power_data.sub_interval = position[2]
-    n1.power_data.time_stamps = self.get_timestamps(PowerDataType, now_8601=now_8601)
+      n2=self.wind_solar_com.by_date_nposition_nfacility[2]    
+      n2.gross_real_power_capability_data = GrossRealPowerCapabilityDataType(
+      )
   
-    
-    
-    
+      n2.gross_real_power_capability_data.time_stamps = self.get_timestamps(GrossRealPowerCapabilityDataType, now_8601=now_8601)    
+      n2.gross_real_power_capability_data.gross_real_power_capability = items[IDX_POWER_GROSS]["Value"]["Value"]
 
-    self.load(com_layer)
+
+      self.load(self.wind_solar_com)
 
   def load(self, com_layer):
     #transform Python data classes to XML
@@ -183,10 +195,7 @@ class EnergyMeteoETL:
     print(output)
     
     
-  def etl(self):
-    self.extract()
-    self.transform()
-    self.load()
+
     
     
 
