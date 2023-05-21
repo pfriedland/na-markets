@@ -1,4 +1,5 @@
 import requests
+from requests.auth import HTTPBasicAuth, HTTPDigestAuth
 import urllib.parse
 import backoff
 from requests_kerberos import HTTPKerberosAuth,DISABLED
@@ -67,8 +68,10 @@ class EnergyMeteoETL:
                        requests.exceptions.ConnectionError,
                        requests.exceptions.RequestException), 
                        max_time=20)
-  def post_request(self, post_url, user, pwd) -> dict:
-    return requests.post(url=post_url, auth=self.kerberos_auth).json()
+  def post_request(self, post_url, data, user=ENERGY_MATEO_PWD, pwd=ENERGY_MATEO_USER) -> dict:
+    return requests.post(url=post_url, data=data,
+                         auth = HTTPBasicAuth(ENERGY_MATEO_USER, 
+                                              ENERGY_MATEO_PWD), verify=False)
 
     
 
@@ -222,7 +225,9 @@ class EnergyMeteoETL:
     #transform Python data classes to XML
     serializer = XmlSerializer()
     output = serializer.render(com_layer)
-    print(output)
+    status = self.post_request(self.config["EnergyMateoUrl"], data=output)
+    print (status)
+    
     
 
 def main():
