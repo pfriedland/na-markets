@@ -6,13 +6,13 @@
 				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T165716Z.CSTL-Castle Rock Ridge.MET
+				20230521T184330Z.CSTL-Castle Rock Ridge.MET
 			</TransactionID>
 			<PositionID>
-				6
+				5
 			</PositionID>
 			<SubInterval>
-				6
+				3
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -22,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:16Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -33,7 +33,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:16Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
@@ -41,19 +41,19 @@
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.5143826007843018
+					4.411261558532715
 				</WindSpeed>
 				<WindDirection>
-					91.14923095703125
+					120.07496643066406
 				</WindDirection>
 				<BarometricPressure>
-					922.5
+					921.8165283203125
 				</BarometricPressure>
 				<DewPoint>
-					7.391575336456299
+					8.523143768310547
 				</DewPoint>
 				<RelativeHumidity>
-					61.681888580322266
+					54.85111999511719
 				</RelativeHumidity>
 				<Precipitation>
 					0.0
@@ -64,22 +64,22 @@
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.9477787017822266
+					3.634302854537964
 				</WindSpeed>
 				<WindDirection>
-					120.79911041259766
+					121.7134017944336
 				</WindDirection>
 				<BarometricPressure>
-					934.6000366210938
+					933.7999877929688
 				</BarometricPressure>
 				<AmbientTemperature>
-					16.30000114440918
+					19.600000381469727
 				</AmbientTemperature>
 				<DewPoint>
-					7.39157247543335
+					8.523452758789062
 				</DewPoint>
 				<RelativeHumidity>
-					55.741641998291016
+					49.13050842285156
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -96,13 +96,13 @@
 				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T165716Z.CSTL-Castle Rock Ridge.PWR
+				20230521T184330Z.CSTL-Castle Rock Ridge.PWR
 			</TransactionID>
 			<PositionID>
-				6
+				5
 			</PositionID>
 			<SubInterval>
-				6
+				3
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -112,7 +112,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:16Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -123,14 +123,14 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:16Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<RealPowerLimit>
-				10.9989052
+				20.4499989
 			</RealPowerLimit>
 			<NetToGrid>
-				6.17
+				20.4499989
 			</NetToGrid>
 		</PowerData>
 	</ByDateNPositionNFacility>
@@ -144,7 +144,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:16Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -155,11 +155,11 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:16Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<GrossRealPowerCapability>
-				6.49
+				20.97
 			</GrossRealPowerCapability>
 		</GrossRealPowerCapabilityData>
 	</ByDateNPositionNFacility>

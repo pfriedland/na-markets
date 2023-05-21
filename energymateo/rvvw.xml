@@ -6,13 +6,13 @@
 				RVVW-Riverview
 			</Facility>
 			<TransactionID>
-				20230521T165724Z.RVVW-Riverview.MET
+				20230521T184330Z.RVVW-Riverview.MET
 			</TransactionID>
 			<PositionID>
-				6
+				5
 			</PositionID>
 			<SubInterval>
-				6
+				3
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -22,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:24Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -33,7 +33,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:24Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
@@ -41,19 +41,19 @@
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.6184701919555664
+					4.170123100280762
 				</WindSpeed>
 				<WindDirection>
-					92.59829711914062
+					118.86370086669922
 				</WindDirection>
 				<BarometricPressure>
-					922.5
+					921.8153686523438
 				</BarometricPressure>
 				<DewPoint>
-					7.391566753387451
+					8.524093627929688
 				</DewPoint>
 				<RelativeHumidity>
-					61.67256546020508
+					54.85462188720703
 				</RelativeHumidity>
 				<Precipitation>
 					0.0
@@ -64,22 +64,22 @@
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.8471333980560303
+					3.4553515911102295
 				</WindSpeed>
 				<WindDirection>
-					120.79950714111328
+					121.57746887207031
 				</WindDirection>
 				<BarometricPressure>
-					934.6000366210938
+					933.7999877929688
 				</BarometricPressure>
 				<AmbientTemperature>
-					16.30000114440918
+					19.600000381469727
 				</AmbientTemperature>
 				<DewPoint>
-					7.39156436920166
+					8.52430248260498
 				</DewPoint>
 				<RelativeHumidity>
-					55.73030090332031
+					49.127418518066406
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -96,13 +96,13 @@
 				RVVW-Riverview
 			</Facility>
 			<TransactionID>
-				20230521T165724Z.RVVW-Riverview.PWR
+				20230521T184330Z.RVVW-Riverview.PWR
 			</TransactionID>
 			<PositionID>
-				6
+				5
 			</PositionID>
 			<SubInterval>
-				6
+				3
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -112,7 +112,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:24Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -123,14 +123,14 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:24Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<RealPowerLimit>
-				10.9989052
+				20.22
 			</RealPowerLimit>
 			<NetToGrid>
-				6.25
+				20.22
 			</NetToGrid>
 		</PowerData>
 	</ByDateNPositionNFacility>
@@ -144,7 +144,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:24Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -155,11 +155,11 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:57:24Z
+					2023-05-21T18:43:30Z
 				</TimeStamp>
 			</TimeStamps>
 			<GrossRealPowerCapability>
-				6.5
+				20.81
 			</GrossRealPowerCapability>
 		</GrossRealPowerCapabilityData>
 	</ByDateNPositionNFacility>

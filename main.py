@@ -5,11 +5,12 @@ from requests_kerberos import HTTPKerberosAuth,DISABLED
 from xsdata.formats.dataclass.serializers import XmlSerializer
 
 from constants import ENERGY_MATEO_USER, ENERGY_MATEO_PWD, CONFIG_FILENAME
-from constants import IDX_TOWER_UID, IDX_TOWER_TEMP,IDX_TOWER_PRESSURE
-from constants import IDX_TOWER_DEW,IDX_TOWER_WIND,IDX_TOWER_DIR,IDX_TOWER_HUMID
-from constants import IDX_TOWER_PRECIP,IDX_TOWER_ICEUP,IDX_TOWER_POSITION,IDX_FACILITY
-from constants import IDX_POWER_FACILITY, IDX_POWER_GROSS, IDX_POWER_POSITION
-from constants import IDX_POWER_NET, IDX_POWER_REAL_LIMIT
+from constants import TOWER_DATA, POWER_DATA
+from constants import TOWER_UID, TOWER_TEMP,TOWER_PRESSURE
+from constants import TOWER_DEW,TOWER_WIND,TOWER_DIR,TOWER_HUMID
+from constants import TOWER_PRECIP,TOWER_ICEUP,TOWER_POSITION
+from constants import POWER_GROSS, POWER_POSITION
+from constants import POWER_NET, POWER_REAL_LIMIT
 
 from energymateo.wind_solar_com_layer import WindSolarComLayer
 from energymateo.wind_solar_com_layer import WindSolarComLayerType
@@ -94,11 +95,11 @@ class EnergyMeteoETL:
       plant_data = {}
       extracted_data["plants"].append(plant_data)
       
-      facility_name = plant['AF_FacilityName'] # wind / solar plant 
+      facility_name = plant['AF_FacilityName'] # wind / solar plant from config
       plant_data["facilityName"] = facility_name
       plant_data["metTowers"]= []
       # loop through met towers
-      for tower in plant["WebIdMeta"]["MetTowers"]:
+      for tower in plant["WebIdMeta"]["MetTowers"]: # from config
 
         #Webapi to get met tower webId
         get_webId_url = f"{self.base_url}\\{facility_name}\\{tower}"
@@ -109,7 +110,7 @@ class EnergyMeteoETL:
         tower_data = self.get_request(get_value_url)
         #print(get_value_url)
         
-        plant_data['metTowers'].append(tower_data)
+        plant_data[TOWER_DATA].append(tower_data)
 
       #Webapi to get PowerData
       if "PowerData" in plant["WebIdMeta"]:
@@ -118,7 +119,7 @@ class EnergyMeteoETL:
         data_set=self.get_request(get_webId_url)
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
         power_data=self.get_request(get_value_url)
-        plant_data["powerData"] = power_data
+        plant_data[POWER_DATA] = power_data # from AF
         
     self.transform(extracted_data)
 
@@ -144,6 +145,7 @@ class EnergyMeteoETL:
       return time_arr
 
   def convert_array_to_dict(self, data) :
+    # helper function to abstract PI WebAPI array position to attributeName
     res_dict = {}
     for value in data:
         res_dict[value["Name"]] = value["Value"]["Value"]
@@ -151,13 +153,12 @@ class EnergyMeteoETL:
   
   def transform(self, data={}):
     #transform data; take PI data and turn into XML using xsd-generated Python classes
-    for plant in data['plants']:
+    for plant in data['plants']: # config
       self.wind_solar_com.by_date_nposition_nfacility[0].access_key=""
 
 
       # get the current time
-      #now = datetime.now()
-      #now_8601=now.strftime('%Y-%m-%dT%H:%M:%S%Z')
+
       now_8601 = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
       now_8601_nosep=datetime.utcnow().strftime('%Y%m%dT%H%M%SZ')
 
@@ -174,24 +175,24 @@ class EnergyMeteoETL:
       wf_dt_arr = [] 
       position = []
       # loop through the met towers
-      for tower in plant["metTowers"]:
+      for tower in plant[TOWER_DATA]: # from AF data
         
         items = self.convert_array_to_dict(tower["Items"])
-        position = self.get_position(items["PositionID"])
+        position = self.get_position(items[TOWER_POSITION])
        
         metFacility.position_id = position[0]
         metFacility.sub_interval = position[2]
         
         metFacility.met_tower_data=WindFacilityMetDataType.MetTowerData(
-        meteorological_tower_unique_id=items["MeteorologicalTowerUniqueID"],
-            ambient_temperature=items["Temperature"],
-            barometric_pressure=items["BarometricPressure"],
-            dew_point=items["DewPoint"],
-            wind_speed=items["WindSpeed"],
-            wind_direction=items["WindDirection"],
-            relative_humidity=items["RelativeHumidity"],
-            precipitation=items["Precipitation"],
-            iceup_parameter=items["IceUpParameter"],
+        meteorological_tower_unique_id=items[TOWER_UID],
+            ambient_temperature=items[TOWER_TEMP],
+            barometric_pressure=items[TOWER_PRESSURE],
+            dew_point=items[TOWER_DEW],
+            wind_speed=items[TOWER_WIND],
+            wind_direction=items[TOWER_DIR],
+            relative_humidity=items[TOWER_HUMID],
+            precipitation=items[TOWER_PRECIP],
+            iceup_parameter=items[TOWER_ICEUP],
 
         )
         wf_dt_arr.append(metFacility.met_tower_data)
@@ -204,13 +205,15 @@ class EnergyMeteoETL:
       n1.power_data = PowerData(
         transaction_id=f"{now_8601_nosep}.{plant['facilityName']}.PWR",
       )
+
+      position = self.get_position(items[POWER_POSITION])
       n1.power_data.facility = plant['facilityName']
       n1.power_data.position_id = position[0]
       n1.power_data.sub_interval = position[2]
       n1.power_data.time_stamps = self.get_timestamps(PowerDataType, now_8601=now_8601)
-      items = self.convert_array_to_dict(plant["powerData"]["Items"])
-      n1.power_data.net_to_grid = items["NetToGrid"]
-      n1.power_data.real_power_limit = items["RealPowerLimit"]
+      items = self.convert_array_to_dict(plant[POWER_DATA]["Items"])
+      n1.power_data.net_to_grid = items[POWER_NET]
+      n1.power_data.real_power_limit = items[POWER_NET]
 
       # create Gross power object
       n2=self.wind_solar_com.by_date_nposition_nfacility[2]    
@@ -218,7 +221,7 @@ class EnergyMeteoETL:
       )
   
       n2.gross_real_power_capability_data.time_stamps = self.get_timestamps(GrossRealPowerCapabilityDataType, now_8601=now_8601)    
-      n2.gross_real_power_capability_data.gross_real_power_capability = items["GrossRealPowerCapability"]
+      n2.gross_real_power_capability_data.gross_real_power_capability = items[POWER_GROSS]
 
       # for each plant, load the results to weather forecast service
       self.load(self.wind_solar_com)
