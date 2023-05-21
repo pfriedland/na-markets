@@ -19,6 +19,10 @@ from energymateo.power_data import PowerData,PowerDataType
 from energymateo.gross_real_power_capability_data import GrossRealPowerCapabilityDataType, GrossRealPowerCapabilityDataType
 from energymateo.error_alert import ErrorAlert, ErrorAlertType
 
+from energymateo.wind_facility_met_data import (
+    TimeStampsActivity,
+    TimeStampsSource,
+)
 
 from utilities.config_parser import ConfigParser
 
@@ -98,22 +102,32 @@ class EnergyMeteoETL:
         
     self.transform(extracted_data)
 
-  def get_timestamps(self, type, now_8601) -> list:
 
+
+
+  def get_timestamps(self, type, now_8601) -> list:
+    # take 8601 UTC string timestamp and return list of type.TimeStamps()
+    # assume the PROCESS and SEND are the same time
    
       time_arr=[]
       ts = type.TimeStamps()
       ts.time_stamp = now_8601
-      ts.activity = "Process"
-      ts.source = "Wind Facility"
+      ts.activity = TimeStampsActivity.PROCESS
+      ts.source = TimeStampsSource.WIND_FACILITY
       time_arr.append(ts)
 
       ts = type.TimeStamps()
       ts.time_stamp = now_8601
-      ts.activity = "Send"
-      ts.source = "Wind Facility"
+      ts.activity = TimeStampsActivity.SEND
+      ts.source = TimeStampsSource.WIND_FACILITY
       time_arr.append(ts)
       return time_arr
+
+  def convert_array_to_dict(self, data) :
+    res_dict = {}
+    for value in data:
+        res_dict[value["Name"]] = value["Value"]["Value"]
+    return res_dict
   
   def transform(self, data={}):
     #transform data; take PI data and turn into XML using xsd-generated Python classes
@@ -142,22 +156,22 @@ class EnergyMeteoETL:
       # loop through the met towers
       for tower in plant["metTowers"]:
         
-        items = tower["Items"]
-        position = self.get_position(items[IDX_TOWER_POSITION]["Value"]["Value"])
+        items = self.convert_array_to_dict(tower["Items"])
+        position = self.get_position(items["PositionID"])
        
         metFacility.position_id = position[0]
         metFacility.sub_interval = position[2]
         
         metFacility.met_tower_data=WindFacilityMetDataType.MetTowerData(
-        meteorological_tower_unique_id=items[IDX_TOWER_UID]['Value']['Value'],
-            ambient_temperature=items[IDX_TOWER_TEMP]["Value"]["Value"],
-            barometric_pressure=items[IDX_TOWER_PRESSURE]["Value"]["Value"],
-            dew_point=items[IDX_TOWER_DEW]["Value"]["Value"],
-            wind_speed=items[IDX_TOWER_WIND]["Value"]["Value"],
-            wind_direction=items[IDX_TOWER_DIR]["Value"]["Value"],
-            relative_humidity=items[IDX_TOWER_HUMID]["Value"]["Value"],
-            precipitation=items[IDX_TOWER_PRECIP]["Value"]["Value"],
-            iceup_parameter=items[IDX_TOWER_ICEUP]["Value"]["Value"],
+        meteorological_tower_unique_id=items["MeteorologicalTowerUniqueID"],
+            ambient_temperature=items["Temperature"],
+            barometric_pressure=items["BarometricPressure"],
+            dew_point=items["DewPoint"],
+            wind_speed=items["WindSpeed"],
+            wind_direction=items["WindDirection"],
+            relative_humidity=items["RelativeHumidity"],
+            precipitation=items["Precipitation"],
+            iceup_parameter=items["IceUpParameter"],
 
         )
         wf_dt_arr.append(metFacility.met_tower_data)
@@ -174,16 +188,16 @@ class EnergyMeteoETL:
       n1.power_data.position_id = position[0]
       n1.power_data.sub_interval = position[2]
       n1.power_data.time_stamps = self.get_timestamps(PowerDataType, now_8601=now_8601)
-      items = plant["powerData"]["Items"]
-      n1.power_data.net_to_grid = items[IDX_POWER_NET]["Value"]["Value"]
-      n1.power_data.real_power_limit = items[IDX_POWER_REAL_LIMIT]["Value"]["Value"]
+      items = self.convert_array_to_dict(plant["powerData"]["Items"])
+      n1.power_data.net_to_grid = items["NetToGrid"]
+      n1.power_data.real_power_limit = items["RealPowerLimit"]
 
       n2=self.wind_solar_com.by_date_nposition_nfacility[2]    
       n2.gross_real_power_capability_data = GrossRealPowerCapabilityDataType(
       )
   
       n2.gross_real_power_capability_data.time_stamps = self.get_timestamps(GrossRealPowerCapabilityDataType, now_8601=now_8601)    
-      n2.gross_real_power_capability_data.gross_real_power_capability = items[IDX_POWER_GROSS]["Value"]["Value"]
+      n2.gross_real_power_capability_data.gross_real_power_capability = items["GrossRealPowerCapability"]
 
 
       self.load(self.wind_solar_com)

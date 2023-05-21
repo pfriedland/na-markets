@@ -1,11 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <WindSolarComLayer xmlns:ns0="http://windforecasting.public.aeso.ca">
 	<ByDateNPositionNFacility>
 		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
 			<Facility>
-				GRBC-Grizzly Bear Creek
+				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T165636Z.GRBC-Grizzly Bear Creek.MET
+				20230521T165716Z.CSTL-Castle Rock Ridge.MET
 			</TransactionID>
 			<PositionID>
 				6
@@ -21,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-21T16:57:16Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -32,7 +33,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-21T16:57:16Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
@@ -40,26 +41,20 @@
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.4062983989715576
+					3.5143826007843018
 				</WindSpeed>
 				<WindDirection>
-					89.67737579345703
+					91.14923095703125
 				</WindDirection>
 				<BarometricPressure>
 					922.5
 				</BarometricPressure>
-				<AmbientTemperature>
-					14.690476417541504
-				</AmbientTemperature>
 				<DewPoint>
-					7.3915839195251465
+					7.391575336456299
 				</DewPoint>
 				<RelativeHumidity>
-					61.69135665893555
+					61.681888580322266
 				</RelativeHumidity>
-				<IceupParameter>
-					0.0
-				</IceupParameter>
 				<Precipitation>
 					0.0
 				</Precipitation>
@@ -69,10 +64,10 @@
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					4.054208278656006
+					3.9477787017822266
 				</WindSpeed>
 				<WindDirection>
-					120.7986831665039
+					120.79911041259766
 				</WindDirection>
 				<BarometricPressure>
 					934.6000366210938
@@ -81,10 +76,10 @@
 					16.30000114440918
 				</AmbientTemperature>
 				<DewPoint>
-					7.391581058502197
+					7.39157247543335
 				</DewPoint>
 				<RelativeHumidity>
-					55.753639221191406
+					55.741641998291016
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -98,10 +93,10 @@
 	<ByDateNPositionNFacility>
 		<PowerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:PowerData">
 			<Facility>
-				GRBC-Grizzly Bear Creek
+				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T165636Z.GRBC-Grizzly Bear Creek.PWR
+				20230521T165716Z.CSTL-Castle Rock Ridge.PWR
 			</TransactionID>
 			<PositionID>
 				6
@@ -117,7 +112,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-21T16:57:16Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -128,7 +123,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-21T16:57:16Z
 				</TimeStamp>
 			</TimeStamps>
 			<RealPowerLimit>
@@ -149,7 +144,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-21T16:57:16Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -160,7 +155,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-21T16:57:16Z
 				</TimeStamp>
 			</TimeStamps>
 			<GrossRealPowerCapability>

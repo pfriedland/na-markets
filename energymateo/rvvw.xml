@@ -1,69 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WindSolarComLayer xmlns:ns0="http://windforecasting.public.aeso.ca">
-	<AccessKey />
 	<ByDateNPositionNFacility>
 		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
+			<Facility>
+				RVVW-Riverview
+			</Facility>
+			<TransactionID>
+				20230521T165724Z.RVVW-Riverview.MET
+			</TransactionID>
 			<PositionID>
-				4
+				6
 			</PositionID>
 			<SubInterval>
-				7
+				6
 			</SubInterval>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Process
+				</Activity>
+				<TimeStamp>
+					2023-05-21T16:57:24Z
+				</TimeStamp>
+			</TimeStamps>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Send
+				</Activity>
+				<TimeStamp>
+					2023-05-21T16:57:24Z
+				</TimeStamp>
+			</TimeStamps>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					4.9200867489266855
+					3.6184701919555664
 				</WindSpeed>
 				<WindDirection>
-					207.40265333973446
+					92.59829711914062
 				</WindDirection>
 				<BarometricPressure>
-					924.5
+					922.5
 				</BarometricPressure>
-				<AmbientTemperature>
-					25.29438979388369
-				</AmbientTemperature>
 				<DewPoint>
-					4.992860296067663
+					7.391566753387451
 				</DewPoint>
 				<RelativeHumidity>
-					27.030862320862592
+					61.67256546020508
 				</RelativeHumidity>
 				<Precipitation>
 					0.0
 				</Precipitation>
 			</MetTowerData>
-		</WindFacilityMetData>
-		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
-			<PositionID>
-				4
-			</PositionID>
-			<SubInterval>
-				7
-			</SubInterval>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					5.5521348014707215
+					3.8471333980560303
 				</WindSpeed>
 				<WindDirection>
-					196.4059110696499
+					120.79950714111328
 				</WindDirection>
 				<BarometricPressure>
-					936.2999877929688
+					934.6000366210938
 				</BarometricPressure>
 				<AmbientTemperature>
-					27.314836786589332
+					16.30000114440918
 				</AmbientTemperature>
 				<DewPoint>
-					4.989924909697368
+					7.39156436920166
 				</DewPoint>
 				<RelativeHumidity>
-					24.314811340627994
+					55.73030090332031
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -73,5 +89,78 @@
 				</Precipitation>
 			</MetTowerData>
 		</WindFacilityMetData>
+	</ByDateNPositionNFacility>
+	<ByDateNPositionNFacility>
+		<PowerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:PowerData">
+			<Facility>
+				RVVW-Riverview
+			</Facility>
+			<TransactionID>
+				20230521T165724Z.RVVW-Riverview.PWR
+			</TransactionID>
+			<PositionID>
+				6
+			</PositionID>
+			<SubInterval>
+				6
+			</SubInterval>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Process
+				</Activity>
+				<TimeStamp>
+					2023-05-21T16:57:24Z
+				</TimeStamp>
+			</TimeStamps>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Send
+				</Activity>
+				<TimeStamp>
+					2023-05-21T16:57:24Z
+				</TimeStamp>
+			</TimeStamps>
+			<RealPowerLimit>
+				10.9989052
+			</RealPowerLimit>
+			<NetToGrid>
+				6.25
+			</NetToGrid>
+		</PowerData>
+	</ByDateNPositionNFacility>
+	<ByDateNPositionNFacility>
+		<GrossRealPowerCapabilityData>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Process
+				</Activity>
+				<TimeStamp>
+					2023-05-21T16:57:24Z
+				</TimeStamp>
+			</TimeStamps>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Send
+				</Activity>
+				<TimeStamp>
+					2023-05-21T16:57:24Z
+				</TimeStamp>
+			</TimeStamps>
+			<GrossRealPowerCapability>
+				6.5
+			</GrossRealPowerCapability>
+		</GrossRealPowerCapabilityData>
 	</ByDateNPositionNFacility>
 </WindSolarComLayer>

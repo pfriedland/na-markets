@@ -1,17 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <WindSolarComLayer xmlns:ns0="http://windforecasting.public.aeso.ca">
 	<ByDateNPositionNFacility>
 		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
 			<Facility>
-				GRBC-Grizzly Bear Creek
+				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T165636Z.GRBC-Grizzly Bear Creek.MET
+				20230518T115920Z.CSTL-Castle Rock Ridge.MET
 			</TransactionID>
 			<PositionID>
 				6
 			</PositionID>
 			<SubInterval>
-				6
+				9
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -21,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-18T11:59:20Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -32,7 +33,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-18T11:59:20Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
@@ -40,26 +41,23 @@
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.4062983989715576
+					4.092146443523406
 				</WindSpeed>
 				<WindDirection>
-					89.67737579345703
+					68.721476092626
 				</WindDirection>
 				<BarometricPressure>
-					922.5
+					928.7000122070312
 				</BarometricPressure>
 				<AmbientTemperature>
-					14.690476417541504
+					3.299999952316284
 				</AmbientTemperature>
 				<DewPoint>
-					7.3915839195251465
+					-0.017931172633468495
 				</DewPoint>
 				<RelativeHumidity>
-					61.69135665893555
+					78.8364294313094
 				</RelativeHumidity>
-				<IceupParameter>
-					0.0
-				</IceupParameter>
 				<Precipitation>
 					0.0
 				</Precipitation>
@@ -69,22 +67,22 @@
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					4.054208278656006
+					4.160760742088659
 				</WindSpeed>
 				<WindDirection>
-					120.7986831665039
+					60.210870589201264
 				</WindDirection>
 				<BarometricPressure>
-					934.6000366210938
+					941.1000366210938
 				</BarometricPressure>
 				<AmbientTemperature>
-					16.30000114440918
+					1.399999976158142
 				</AmbientTemperature>
 				<DewPoint>
-					7.391581058502197
+					-0.018004956983693733
 				</DewPoint>
 				<RelativeHumidity>
-					55.753639221191406
+					88.55501283257625
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -98,16 +96,16 @@
 	<ByDateNPositionNFacility>
 		<PowerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:PowerData">
 			<Facility>
-				GRBC-Grizzly Bear Creek
+				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T165636Z.GRBC-Grizzly Bear Creek.PWR
+				20230518T115920Z.CSTL-Castle Rock Ridge.PWR
 			</TransactionID>
 			<PositionID>
 				6
 			</PositionID>
 			<SubInterval>
-				6
+				9
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -117,7 +115,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-18T11:59:20Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -128,19 +126,22 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-18T11:59:20Z
 				</TimeStamp>
 			</TimeStamps>
-			<RealPowerLimit>
-				10.9989052
-			</RealPowerLimit>
 			<NetToGrid>
-				6.17
+				4.73
 			</NetToGrid>
 		</PowerData>
 	</ByDateNPositionNFacility>
 	<ByDateNPositionNFacility>
 		<GrossRealPowerCapabilityData>
+			<Facility>
+				CSTL-Castle Rock Ridge
+			</Facility>
+			<TransactionID>
+				20230518T115920Z.CSTL-Castle Rock Ridge.GPC
+			</TransactionID>
 			<TimeStamps>
 				<Source>
 					Wind Facility
@@ -149,7 +150,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-18T11:59:20Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -160,11 +161,11 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T16:56:36Z
+					2023-05-18T11:59:20Z
 				</TimeStamp>
 			</TimeStamps>
 			<GrossRealPowerCapability>
-				6.49
+				CSTL-Castle Rock Ridge
 			</GrossRealPowerCapability>
 		</GrossRealPowerCapabilityData>
 	</ByDateNPositionNFacility>
