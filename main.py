@@ -32,14 +32,6 @@ import json
 from dataclasses import asdict
 from datetime import datetime
 
-BASE_URL="https://egpna-pi-web.enelint.global/PIwebapi/elements?path=\\\\egpna-pi-af\\North America Markets\\GRBC-Grizzly Bear Creek\\"
-WEBID_URL="https://egpna-pi-web.enelint.global/PIwebapi/"
-MET_TOWER_SET_1=f'{BASE_URL}GRBC-Met Tower-Set1&selectedFields=WebId'
-MET_TOWER_SET_2=f'{BASE_URL}GRBC-Met Tower-Set2&selectedFields=WebId'
-POWER_DATA=f'{BASE_URL}GRBC-PowerData&selectedFields=WebId'
-FACILITY_DATA_V136=f'{BASE_URL}GRBC-FacilityData-V136&selectedFields=WebId'
-FACILITY_DATA_V150=f'{BASE_URL}GRBC-FacilityData-V150&selectedFields=WebId'
-
 class EnergyMeteoETL:
   # purpose of class is to 
   def __init__(self, config, user=ENERGY_MATEO_USER, pwd=ENERGY_MATEO_PWD):
