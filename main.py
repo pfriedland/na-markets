@@ -61,6 +61,23 @@ class EnergyMeteoETL:
     arr = []
     arr = value.split(' ')
     return arr
+  
+  @backoff.on_exception(backoff.expo,
+                      (requests.exceptions.Timeout,
+                       requests.exceptions.ConnectionError,
+                       requests.exceptions.RequestException), 
+                       max_time=40)
+  def get_request(self, request_url) -> dict:
+    return requests.get(url=request_url, auth=self.kerberos_auth).json()
+  @backoff.on_exception(backoff.expo,
+                      (requests.exceptions.Timeout,
+                       requests.exceptions.ConnectionError,
+                       requests.exceptions.RequestException), 
+                       max_time=20)
+  def post_request(self, post_url, user, pwd) -> dict:
+    return requests.post(url=post_url, auth=self.kerberos_auth).json()
+
+    
 
   def authenticate(self):
     #PI kerberos authentication
@@ -83,21 +100,24 @@ class EnergyMeteoETL:
       # loop through met towers
       for tower in plant["WebIdMeta"]["MetTowers"]:
 
-        #Webapi to get met tower data
+        #Webapi to get met tower webId
         get_webId_url = f"{self.base_url}\\{facility_name}\\{tower}"
-        
-        data_set=requests.get(url=get_webId_url, auth=self.kerberos_auth).json()
+        data_set = self.get_request(get_webId_url)
+
+        # webapi to get met tower data
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
+        tower_data = self.get_request(get_value_url)
         #print(get_value_url)
-        tower_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
+        
         plant_data['metTowers'].append(tower_data)
 
       #Webapi to get PowerData
       if "PowerData" in plant["WebIdMeta"]:
         get_webId_url = f"{self.base_url}\\{facility_name}\\{plant['WebIdMeta']['PowerData']}"  
-        data_set=requests.get(url=get_webId_url, auth=self.kerberos_auth).json()
+        # web api to get power webId
+        data_set=self.get_request(get_webId_url)
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
-        power_data=requests.get(url=get_value_url, auth=self.kerberos_auth).json()
+        power_data=self.get_request(get_value_url)
         plant_data["powerData"] = power_data
         
     self.transform(extracted_data)
@@ -192,6 +212,7 @@ class EnergyMeteoETL:
       n1.power_data.net_to_grid = items["NetToGrid"]
       n1.power_data.real_power_limit = items["RealPowerLimit"]
 
+      # create Gross power object
       n2=self.wind_solar_com.by_date_nposition_nfacility[2]    
       n2.gross_real_power_capability_data = GrossRealPowerCapabilityDataType(
       )
@@ -199,7 +220,7 @@ class EnergyMeteoETL:
       n2.gross_real_power_capability_data.time_stamps = self.get_timestamps(GrossRealPowerCapabilityDataType, now_8601=now_8601)    
       n2.gross_real_power_capability_data.gross_real_power_capability = items["GrossRealPowerCapability"]
 
-
+      # for each plant, load the results to weather forecast service
       self.load(self.wind_solar_com)
 
   def load(self, com_layer):

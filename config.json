@@ -8,8 +8,7 @@
             "AF_FacilityName": "GRBC-Grizzly Bear Creek",
             "WebIdMeta": {
                 "MetTowers": ["GRBC-Met Tower-Set1-Avg&selectedFields=WebId", "GRBC-Met Tower-Set2-Avg&selectedFields=WebId"],
-                "PowerData": "GRBC-PowerData&selectedFields=WebId",
-                "FacilityData": ["GRBC-FacilityData-V136&selectedFields=WebId", "GRBC-FacilityData-V150&selectedFields=WebId"]
+                "PowerData": "GRBC-PowerData&selectedFields=WebId"
             }
 
             
