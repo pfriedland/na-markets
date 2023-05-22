@@ -99,7 +99,6 @@ class EnergyMeteoETL:
         #Webapi to get met tower webId
         get_webId_url = f"{self.base_url}\\{facility_name}\\{tower}"
         data_set = self.get_request(get_webId_url)
-
         # webapi to get met tower data
         get_value_url=f'{self.webIdUrl}/streamsets/{data_set["WebId"]}/value?selectedFields=Items.Name;Items.Value.Value'
         tower_data = self.get_request(get_value_url)
@@ -225,8 +224,9 @@ class EnergyMeteoETL:
     #transform Python data classes to XML
     serializer = XmlSerializer()
     output = serializer.render(com_layer)
+    print (output + "\n")
     status = self.post_request(self.config["EnergyMateoUrl"], data=output)
-    print (status)
+    print (status.content)
     
     
 
