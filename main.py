@@ -209,23 +209,31 @@ class EnergyMeteoETL:
       )
 
       position = self.get_position(items[POWER_POSITION])
-      n1.power_data.facility = metFacility.f
+      n1.power_data.facility = plant["facilityID"]
       n1.power_data.position_id = position[0]
       n1.power_data.sub_interval = position[2]
       n1.power_data.time_stamps = self.get_timestamps(PowerDataType, now_8601=now_8601)
       items = self.convert_array_to_dict(plant[POWER_DATA]["Items"])
       n1.power_data.net_to_grid = items[POWER_NET]
-      n1.power_data.real_power_limit = items[POWER_NET]
+      n1.power_data.real_power_limit = items[POWER_REAL_LIMIT]
 
       # create Gross power object
-      #n2=self.wind_solar_com.by_date_nposition_nfacility[2]    
-      #n2.gross_real_power_capability_data = GrossRealPowerCapabilityDataType(
-     # )
+      n2=self.wind_solar_com.by_date_nposition_nfacility[2]    
+      n2.gross_real_power_capability_data = GrossRealPowerCapabilityDataType(
+        facility=plant["facilityID"]
+      )
+      n2.gross_real_power_capability_data.transaction_id=f"{now_8601_nosep}.{plant['facilityID']}.GPWR"
   
-      #n2.gross_real_power_capability_data.time_stamps = self.get_timestamps(GrossRealPowerCapabilityDataType, now_8601=now_8601)    
-     # n2.gross_real_power_capability_data.gross_real_power_capability = items[POWER_GROSS]
-      #n2.gross_real_power_capability_data.GrossRealPowerCapability.time_stamp_begin=now_8601
-      #n2.gross_real_power_capability_data.GrossRealPowerCapability.time_stamp_end=now_8601      
+      n2.gross_real_power_capability_data.time_stamps = self.get_timestamps(GrossRealPowerCapabilityDataType, now_8601=now_8601)    
+     
+      gross_cap_arr=[]
+      gpc = GrossRealPowerCapabilityDataType.GrossRealPowerCapability()
+      gpc.time_stamp_begin=now_8601
+      gpc.time_stamp_end=now_8601
+      gpc.capacity_average = items[POWER_GROSS]
+      gross_cap_arr.append(gpc)
+      n2.gross_real_power_capability_data.gross_real_power_capability=gross_cap_arr
+      
 
       # for each plant, load the results to weather forecast service
       self.load(self.wind_solar_com)

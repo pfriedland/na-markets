@@ -3,16 +3,16 @@
 	<ByDateNPositionNFacility>
 		<WindFacilityMetData>
 			<Facility>
-				CSTL-Castle Rock Ridge
+				wap3FfVwbV
 			</Facility>
 			<TransactionID>
-				20230523T212023Z.CSTL-Castle Rock Ridge.MET
+				20230524T030056Z.CSTL-Castle Rock Ridge.MET
 			</TransactionID>
 			<PositionID>
-				3
+				1
 			</PositionID>
 			<SubInterval>
-				3
+				1
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -22,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-23T21:20:23Z
+					2023-05-24T03:00:56Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -33,7 +33,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-23T21:20:23Z
+					2023-05-24T03:00:56Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
@@ -41,22 +41,22 @@
 					708s6553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					8.584314346313477
+					6.250733375549316
 				</WindSpeed>
 				<WindDirection>
-					292.05841064453125
+					292.5649719238281
 				</WindDirection>
 				<BarometricPressure>
-					879.6146240234375
+					880.1217651367188
 				</BarometricPressure>
 				<AmbientTemperature>
-					14.164398193359375
+					16.112350463867188
 				</AmbientTemperature>
 				<DewPoint>
-					-0.4163547158241272
+					-1.8758078813552856
 				</DewPoint>
 				<RelativeHumidity>
-					33.54219436645508
+					29.290983200073242
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -67,25 +67,25 @@
 			</MetTowerData>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
-					708s12053111
+					708s3553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					7.956838607788086
+					5.599084377288818
 				</WindSpeed>
 				<WindDirection>
-					296.19207763671875
+					295.6875915527344
 				</WindDirection>
 				<BarometricPressure>
-					879.5966186523438
+					880.0822143554688
 				</BarometricPressure>
 				<AmbientTemperature>
-					16.190937042236328
+					16.124420166015625
 				</AmbientTemperature>
 				<DewPoint>
-					-0.4163547158241272
+					-1.8758078813552856
 				</DewPoint>
 				<RelativeHumidity>
-					32.675785064697266
+					30.062252044677734
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -102,13 +102,13 @@
 				wap3FfVwbV
 			</Facility>
 			<TransactionID>
-				20230523T212023Z.wap3FfVwbV.PWR
+				20230524T030056Z.wap3FfVwbV.PWR
 			</TransactionID>
 			<PositionID>
-				3
+				1
 			</PositionID>
 			<SubInterval>
-				3
+				1
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -118,7 +118,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-23T21:20:23Z
+					2023-05-24T03:00:56Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -129,16 +129,58 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-23T21:20:23Z
+					2023-05-24T03:00:56Z
 				</TimeStamp>
 			</TimeStamps>
 			<RealPowerLimit>
-				29.3
+				31.3586712
 			</RealPowerLimit>
 			<NetToGrid>
-				29.3
+				29.73
 			</NetToGrid>
 		</PowerData>
 	</ByDateNPositionNFacility>
-	<ByDateNPositionNFacility />
+	<ByDateNPositionNFacility>
+		<GrossRealPowerCapabilityData>
+			<Facility>
+				wap3FfVwbV
+			</Facility>
+			<TransactionID>
+				20230524T030056Z.wap3FfVwbV.GPWR
+			</TransactionID>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Process
+				</Activity>
+				<TimeStamp>
+					2023-05-24T03:00:56Z
+				</TimeStamp>
+			</TimeStamps>
+			<TimeStamps>
+				<Source>
+					Wind Facility
+				</Source>
+				<Activity>
+					Send
+				</Activity>
+				<TimeStamp>
+					2023-05-24T03:00:56Z
+				</TimeStamp>
+			</TimeStamps>
+			<GrossRealPowerCapability>
+				<TimeStampBegin>
+					2023-05-24T03:00:56Z
+				</TimeStampBegin>
+				<TimeStampEnd>
+					2023-05-24T03:00:56Z
+				</TimeStampEnd>
+				<CapacityAverage>
+					119.159996
+				</CapacityAverage>
+			</GrossRealPowerCapability>
+		</GrossRealPowerCapabilityData>
+	</ByDateNPositionNFacility>
 </WindSolarComLayer>
