@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WindSolarComLayer xmlns:ns0="http://windforecasting.public.aeso.ca">
 	<ByDateNPositionNFacility>
-		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
+		<WindFacilityMetData>
 			<Facility>
 				GRBC-Grizzly Bear Creek
 			</Facility>
 			<TransactionID>
-				20230521T184330Z.GRBC-Grizzly Bear Creek.MET
+				20230522T172248Z.GRBC-Grizzly Bear Creek.MET
 			</TransactionID>
 			<PositionID>
-				5
+				3
 			</PositionID>
 			<SubInterval>
-				3
+				2
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -22,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-22T17:22:48Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -33,7 +33,7 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-22T17:22:48Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
@@ -41,22 +41,22 @@
 					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					4.557400226593018
+					6.203432559967041
 				</WindSpeed>
 				<WindDirection>
-					120.57489776611328
+					145.12176513671875
 				</WindDirection>
 				<BarometricPressure>
-					921.8172607421875
+					913.12109375
 				</BarometricPressure>
 				<AmbientTemperature>
-					17.700000762939453
+					21.30000114440918
 				</AmbientTemperature>
 				<DewPoint>
-					8.522562026977539
+					10.252458572387695
 				</DewPoint>
 				<RelativeHumidity>
-					54.84895706176758
+					49.25785446166992
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -70,22 +70,22 @@
 					708s4553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.7861697673797607
+					5.867682933807373
 				</WindSpeed>
 				<WindDirection>
-					121.82876586914062
+					144.01211547851562
 				</WindDirection>
 				<BarometricPressure>
-					933.7999877929688
+					924.9000244140625
 				</BarometricPressure>
 				<AmbientTemperature>
-					19.600000381469727
+					23.101892471313477
 				</AmbientTemperature>
 				<DewPoint>
-					8.52273941040039
+					10.253273010253906
 				</DewPoint>
 				<RelativeHumidity>
-					49.13313293457031
+					44.474464416503906
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -97,18 +97,18 @@
 		</WindFacilityMetData>
 	</ByDateNPositionNFacility>
 	<ByDateNPositionNFacility>
-		<PowerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:PowerData">
+		<PowerData>
 			<Facility>
 				GRBC-Grizzly Bear Creek
 			</Facility>
 			<TransactionID>
-				20230521T184330Z.GRBC-Grizzly Bear Creek.PWR
+				20230522T172248Z.GRBC-Grizzly Bear Creek.PWR
 			</TransactionID>
 			<PositionID>
-				5
+				3
 			</PositionID>
 			<SubInterval>
-				3
+				2
 			</SubInterval>
 			<TimeStamps>
 				<Source>
@@ -118,7 +118,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-22T17:22:48Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -129,43 +129,21 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-22T17:22:48Z
 				</TimeStamp>
 			</TimeStamps>
 			<RealPowerLimit>
-				20.4499989
+				25.9499989
 			</RealPowerLimit>
 			<NetToGrid>
-				20.4499989
+				25.9499989
 			</NetToGrid>
 		</PowerData>
 	</ByDateNPositionNFacility>
 	<ByDateNPositionNFacility>
 		<GrossRealPowerCapabilityData>
-			<TimeStamps>
-				<Source>
-					Wind Facility
-				</Source>
-				<Activity>
-					Process
-				</Activity>
-				<TimeStamp>
-					2023-05-21T18:43:30Z
-				</TimeStamp>
-			</TimeStamps>
-			<TimeStamps>
-				<Source>
-					Wind Facility
-				</Source>
-				<Activity>
-					Send
-				</Activity>
-				<TimeStamp>
-					2023-05-21T18:43:30Z
-				</TimeStamp>
-			</TimeStamps>
 			<GrossRealPowerCapability>
-				20.97
+				26.47
 			</GrossRealPowerCapability>
 		</GrossRealPowerCapabilityData>
 	</ByDateNPositionNFacility>

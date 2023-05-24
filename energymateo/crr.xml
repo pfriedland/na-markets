@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WindSolarComLayer xmlns:ns0="http://windforecasting.public.aeso.ca">
 	<ByDateNPositionNFacility>
-		<WindFacilityMetData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:WindFacilityMetData">
+		<WindFacilityMetData>
 			<Facility>
 				CSTL-Castle Rock Ridge
 			</Facility>
 			<TransactionID>
-				20230521T184330Z.CSTL-Castle Rock Ridge.MET
+				20230523T212023Z.CSTL-Castle Rock Ridge.MET
 			</TransactionID>
 			<PositionID>
-				5
+				3
 			</PositionID>
 			<SubInterval>
 				3
@@ -22,7 +22,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-23T21:20:23Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -33,53 +33,59 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-23T21:20:23Z
 				</TimeStamp>
 			</TimeStamps>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
-					708s12053111
+					708s6553111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					4.411261558532715
+					8.584314346313477
 				</WindSpeed>
 				<WindDirection>
-					120.07496643066406
+					292.05841064453125
 				</WindDirection>
 				<BarometricPressure>
-					921.8165283203125
+					879.6146240234375
 				</BarometricPressure>
+				<AmbientTemperature>
+					14.164398193359375
+				</AmbientTemperature>
 				<DewPoint>
-					8.523143768310547
+					-0.4163547158241272
 				</DewPoint>
 				<RelativeHumidity>
-					54.85111999511719
+					33.54219436645508
 				</RelativeHumidity>
+				<IceupParameter>
+					0.0
+				</IceupParameter>
 				<Precipitation>
 					0.0
 				</Precipitation>
 			</MetTowerData>
 			<MetTowerData>
 				<MeteorologicalTowerUniqueID>
-					708s4553111
+					708s12053111
 				</MeteorologicalTowerUniqueID>
 				<WindSpeed>
-					3.634302854537964
+					7.956838607788086
 				</WindSpeed>
 				<WindDirection>
-					121.7134017944336
+					296.19207763671875
 				</WindDirection>
 				<BarometricPressure>
-					933.7999877929688
+					879.5966186523438
 				</BarometricPressure>
 				<AmbientTemperature>
-					19.600000381469727
+					16.190937042236328
 				</AmbientTemperature>
 				<DewPoint>
-					8.523452758789062
+					-0.4163547158241272
 				</DewPoint>
 				<RelativeHumidity>
-					49.13050842285156
+					32.675785064697266
 				</RelativeHumidity>
 				<IceupParameter>
 					0.0
@@ -91,15 +97,15 @@
 		</WindFacilityMetData>
 	</ByDateNPositionNFacility>
 	<ByDateNPositionNFacility>
-		<PowerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns0:PowerData">
+		<PowerData>
 			<Facility>
-				CSTL-Castle Rock Ridge
+				wap3FfVwbV
 			</Facility>
 			<TransactionID>
-				20230521T184330Z.CSTL-Castle Rock Ridge.PWR
+				20230523T212023Z.wap3FfVwbV.PWR
 			</TransactionID>
 			<PositionID>
-				5
+				3
 			</PositionID>
 			<SubInterval>
 				3
@@ -112,7 +118,7 @@
 					Process
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-23T21:20:23Z
 				</TimeStamp>
 			</TimeStamps>
 			<TimeStamps>
@@ -123,44 +129,16 @@
 					Send
 				</Activity>
 				<TimeStamp>
-					2023-05-21T18:43:30Z
+					2023-05-23T21:20:23Z
 				</TimeStamp>
 			</TimeStamps>
 			<RealPowerLimit>
-				20.4499989
+				29.3
 			</RealPowerLimit>
 			<NetToGrid>
-				20.4499989
+				29.3
 			</NetToGrid>
 		</PowerData>
 	</ByDateNPositionNFacility>
-	<ByDateNPositionNFacility>
-		<GrossRealPowerCapabilityData>
-			<TimeStamps>
-				<Source>
-					Wind Facility
-				</Source>
-				<Activity>
-					Process
-				</Activity>
-				<TimeStamp>
-					2023-05-21T18:43:30Z
-				</TimeStamp>
-			</TimeStamps>
-			<TimeStamps>
-				<Source>
-					Wind Facility
-				</Source>
-				<Activity>
-					Send
-				</Activity>
-				<TimeStamp>
-					2023-05-21T18:43:30Z
-				</TimeStamp>
-			</TimeStamps>
-			<GrossRealPowerCapability>
-				20.97
-			</GrossRealPowerCapability>
-		</GrossRealPowerCapabilityData>
-	</ByDateNPositionNFacility>
+	<ByDateNPositionNFacility />
 </WindSolarComLayer>
