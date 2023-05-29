@@ -1,0 +1,34 @@
+{
+    "EnergyMateoUrl": "https://windsolardatahub.aeso.ca/preprod/upload",
+    "WebIdUrl": "https://egpna-pi-web.enelint.global/PIwebapi",
+    "AF_BaseUri": "/elements?path=\\\\egpna-pi-af\\",
+    "AF_Database": "North America Markets",
+    "plants": [
+        { 
+            "AF_FacilityName": "GRBC-Grizzly Bear Creek",
+            "WebIdMeta": {
+                "MetTowers": ["GRBC-Met Tower-Set1-Avg&selectedFields=WebId", "GRBC-Met Tower-Set2-Avg&selectedFields=WebId"],
+                "PowerData": "GRBC-PowerData-Avg&selectedFields=WebId"
+            }
+
+            
+        },
+        { 
+            "AF_FacilityName": "CSTL-Castle Rock Ridge",
+            "WebIdMeta": {
+                "MetTowers": ["CSTL-Met Tower-Set1-Avg&selectedFields=WebId", "CSTL-Met Tower-Set2-Avg&selectedFields=WebId"],
+                "PowerData": "CSTL-PowerData-Avg&selectedFields=WebId"
+            }
+            
+        },
+        { 
+            "AF_FacilityName": "RVVW-Riverview",
+            "WebIdMeta": {
+                "MetTowers": ["RVVW-Met Tower-Set1-Avg&selectedFields=WebId", "RVVW-Met Tower-Set2-Avg&selectedFields=WebId"],
+                "PowerData": "RVVW-PowerData-Avg&selectedFields=WebId"
+            }
+            
+        }
+  
+  ]
+}
