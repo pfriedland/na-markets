@@ -1,0 +1,4 @@
+requests
+requests-kerberos
+xsdata
+backoff
